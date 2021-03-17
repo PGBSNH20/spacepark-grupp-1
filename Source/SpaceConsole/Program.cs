@@ -1,4 +1,5 @@
 ﻿using System;
+using SpaceEngine;
 
 namespace SpaceConsole
 {
@@ -6,7 +7,8 @@ namespace SpaceConsole
     {
         static async void Main(string[] args)
         {
-            await SpaceEngine.SpaceOrm.GetPeople();
+            //await SpaceOrm.GetPeople();
+            await SpaceOrm.GetStarShips();
         }
     }
 }

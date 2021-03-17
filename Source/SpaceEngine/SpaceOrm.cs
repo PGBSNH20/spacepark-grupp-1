@@ -17,9 +17,21 @@ namespace SpaceEngine
 
             foreach (var p in peopleResponse.Results)
             {
-                Console.WriteLine(p.Name + " " + p.Gender);
+                Console.WriteLine(p.Name);
             }
             Console.ReadKey();
+        }
+
+        public static async Task GetStarShips()
+        {
+            var client = new RestClient("https://swapi.dev/api/");
+            var request = new RestRequest("starships/", DataFormat.Json);
+            var shipResponse = await client.GetAsync<StarShipResponse>(request);
+
+            foreach (var s in shipResponse.Results)
+            {
+                Console.WriteLine($"{s.Name} {s.Length}");
+            }
         }
     }
 }
