@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceParkModel
 {
-    class Invoice
+    public class Invoice
     {
     }
 }

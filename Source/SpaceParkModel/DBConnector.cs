@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceParkModel
 {
-    class DBConnector
+    public class DBConnector
     {
     }
 }

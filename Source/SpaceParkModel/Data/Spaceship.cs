@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace SpaceParkModel.Data
 {
-    class Spaceship
+    public class Spaceship
     {
         public int ID { get; set; }
         public string Name { get; set; }
         public int Length { get; set; }
-
     }
 }

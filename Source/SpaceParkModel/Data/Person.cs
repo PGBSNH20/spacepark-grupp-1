@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceParkModel.Data
 {
-    class Person
+    public class Person
     {
         public int ID { get; set; }
         public string Name { get; set; }

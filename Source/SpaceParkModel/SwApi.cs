@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceParkModel.Data
 {
-    class SwApi
+    public class SwApi
     {
         //
     }
