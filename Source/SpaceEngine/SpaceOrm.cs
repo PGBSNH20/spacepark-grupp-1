@@ -24,13 +24,22 @@ namespace SpaceEngine
 
         public static async Task GetStarShips()
         {
-            var client = new RestClient("https://swapi.dev/api/");
-            var request = new RestRequest("starships/", DataFormat.Json);
-            var shipResponse = await client.GetAsync<StarShipResponse>(request);
+            var starShipList = new List<Starship>();
 
-            foreach (var s in shipResponse.Results)
+            // Gets all the starships
+            for (int i = 1; i <= 4; i++)
             {
-                Console.WriteLine($"{s.Name} {s.Length}");
+                var client = new RestClient("https://swapi.dev/api/");
+                var request = new RestRequest($"starships/?page={i}", DataFormat.Json);
+                var shipResponse = await client.GetAsync<StarShipResponse>(request);
+                foreach (var s in shipResponse.Results)
+                {
+                    starShipList.Add(s);
+                }
+            }
+            foreach (var ship in starShipList)
+            {
+                Console.WriteLine($"Name:{ship.Name} Length:{ship.Length}");
             }
         }
     }
