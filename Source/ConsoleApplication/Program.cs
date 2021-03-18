@@ -8,9 +8,9 @@ namespace SpacePort
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-         //   "people/?search=" + name, DataFormat.Json
+            //   "people/?search=" + name, DataFormat.Json
             //MyContext context = new MyContext();
             //var order = new Order()
             //{
@@ -20,36 +20,24 @@ namespace SpacePort
             //};
             //context.Add(order);
             //context.SaveChanges();
-           
-            var client = new RestClient("https://swapi.dev/api/");
-            var request = new RestRequest("people/?search=Leia Organa", DataFormat.Json);
-            
-            var peopleResponse = await client.GetAsync<PersonResponse>(request);
 
-            foreach (var item in peopleResponse.Results)
-            {
-                Console.WriteLine(item.birth_year);
-            }
-          
+            //var client = new RestClient("https://swapi.dev/api/");
+            //var request = new RestRequest("people/?search=Leia Organa", DataFormat.Json);
 
-            //foreach (var item in peopleResponse.Starships)
+            //var peopleResponse = await client.GetAsync<PersonResponse>(request);
+
+            //foreach (var item in peopleResponse.Results)
             //{
-            //    Console.WriteLine(item);
-            //}
-            //foreach (var item in peopleResponse.Starship)
-            //{
-            //    Console.WriteLine(item);
+            //    Console.WriteLine(item.name);
             //}
 
-
-            //foreach (var p in peopleResponse.Name)
-            //{
-            //    Console.WriteLine(p);
-            //    //Id.Add(p.Url);
-
-            //}
+            PersonData a = new PersonData();
+            a=APIFetch.GetPerson("Luke Skywalker");
+            Console.WriteLine(a.Name);
 
             Console.WriteLine();
+           
+            
             Console.ReadKey();
 
         }
