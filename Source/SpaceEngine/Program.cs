@@ -18,6 +18,19 @@ namespace SpaceEngine
             //}
             //Console.ReadKey();
             await SpaceOrm.GetStarShips();
+
+
+            // Nästa steg, lägg till alla spaceships i databasen samt karaktärer.
+            var context = new MyContext();
+            var character = new Character()
+            {
+                Name = "Luke SkyWalker",
+                Gender = "Male",
+                Height = 177
+            };
+            context.Character.Add(character);
+            context.SaveChanges();
+            Console.WriteLine("Data Saved");
         }
     }
 }

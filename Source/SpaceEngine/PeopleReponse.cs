@@ -4,6 +4,6 @@ namespace SpaceEngine
 {
     internal class PeopleReponse
     {
-        public List<People> Results { get; set; }
+        public List<Character> Results { get; set; }
     }
 }

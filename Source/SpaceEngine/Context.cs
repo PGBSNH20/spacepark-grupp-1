@@ -9,8 +9,8 @@ namespace SpaceEngine
 {
     public class MyContext : DbContext
     {
-        public DbSet<People> people { get; set; }
-        public DbSet<Starship> starShip { get; set; }
+        public DbSet<Character> Character { get; set; }
+        public DbSet<Starship> StarShip { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
