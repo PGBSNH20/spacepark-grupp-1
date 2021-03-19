@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace SpaceParkModel.SwApi
 {
-    public class SwPeopleResult
+    public class SwStarship
     {
         public string Name { get; set; }
-        //public List<SwStarshipsResult> Starships { get; set; }
-        public string Starships { get; set; }
+        public string Length { get; set; }
     }
 }

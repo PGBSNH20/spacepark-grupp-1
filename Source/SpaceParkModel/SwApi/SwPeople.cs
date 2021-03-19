@@ -1,20 +1,15 @@
-﻿using RestSharp;
-using SpaceParkModel.Data;
-using SpaceParkModel.SwApi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpaceParkModel
+namespace SpaceParkModel.SwApi
 {
     public class SwPeople
     {
-        public int Count { get; set; }
-        public string Next { get; set; }
-        public string Previous { get; set; }
-        public List<SwPeopleResult> Results { get; set; }
+        public string Name { get; set; }
+        //public List<SwStarshipsResult> Starships { get; set; }
+        public string Starships { get; set; }
     }
 }

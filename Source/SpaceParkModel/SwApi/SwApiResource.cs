@@ -2,11 +2,12 @@
 {
     public enum SwApiResource
     {
-        films,
         people,
-        planets,
-        species,
-        starships,
-        vehicles
+        starships
+        // In case of further development (make sure to add the appropriate SwClasses)
+        //films,
+        //planets,
+        //species,
+        //vehicles
     }
 }
