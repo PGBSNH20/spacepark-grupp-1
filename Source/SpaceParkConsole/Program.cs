@@ -1,5 +1,6 @@
 ﻿using SpaceParkModel.Data;
 using System;
+using System.Collections.Generic;
 
 namespace SpaceParkConsole
 {
@@ -8,7 +9,7 @@ namespace SpaceParkConsole
         static void Main(string[] args)
         {
             SwApi peopleApi = new SwApi();
-            peopleApi.GetPeople();
+            List<Person> people = peopleApi.GetPeople().Result;
             Console.ReadKey();
         }
     }

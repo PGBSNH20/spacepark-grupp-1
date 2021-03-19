@@ -24,5 +24,13 @@ namespace SpaceParkModel.Data
             List<Person> people = peopleResponse.Results; 
             return people;
         }
+
+        public async Task<List<Person>> SearchPeople(string searchTerm)
+        {
+            var request = new RestRequest($"people/?search={searchTerm}", DataFormat.Json);
+            var peopleResponse = await client.GetAsync<SwPeople>(request);
+            List<Person> people = peopleResponse.Results;
+            return people;
+        }
     }
 }
