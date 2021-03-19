@@ -10,5 +10,6 @@ namespace SpaceParkModel.Data
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        // we will need with the current plan of the team need: starships
     }
 }

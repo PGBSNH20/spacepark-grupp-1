@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpaceParkModel.Data;
+using System;
 
 namespace SpaceParkConsole
 {
@@ -6,7 +7,9 @@ namespace SpaceParkConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            SwApi peopleApi = new SwApi();
+            peopleApi.GetPeople();
+            Console.ReadKey();
         }
     }
 }
