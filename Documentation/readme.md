@@ -5,3 +5,6 @@ First the group gathered, and decided to spend today on their own structure, the
 
 ## 2021-03-18
 Today we got together, and we all talked about our ideas of what each person thinks the project contains. Then we chose a Flowchart/Database look of how we want our project to look like, And we Decided to take today and tomorrow to Look up and attempt to connect the API and the SQL database to our project, We will be touching bases each day to see how it is going for each one of us, and if someone needs help then we will take time to teach what the other person came up with the solution (type-of-thing) We uploaded a picture of our Flowchart, and a basic picture of what we think the database tables will have (ER-Diagram)
+
+## 2021-03-19
+Continuation from yesterday, get the API and the databas to work, testing that you can grab a character, and perhaps do something with the data. On Monday the plan is to meet up, and have some Idea as to how to work with the API and the database, what the databases need to hold in order for the program to be successfull.
