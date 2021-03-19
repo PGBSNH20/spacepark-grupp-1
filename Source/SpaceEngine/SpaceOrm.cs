@@ -9,37 +9,38 @@ namespace SpaceEngine
 {
     public class SpaceOrm
     {
-        public static async Task GetPeople()
+        public static async Task ValidateCharacter(string input)
         {
             var client = new RestClient("https://swapi.dev/api/");
-            var request = new RestRequest("people/", DataFormat.Json);
+            var request = new RestRequest($"people/?search={input}", DataFormat.Json);
             var peopleResponse = await client.GetAsync<PeopleReponse>(request);
 
-            foreach (var p in peopleResponse.Results)
+            if (peopleResponse.Results.Count != 1)
             {
-                Console.WriteLine(p.Name);
+                Console.WriteLine("Invalid character");
             }
-            Console.ReadKey();
+            else
+            {
+                Console.WriteLine($"Welcome {peopleResponse.Results[0].Name}");
+                //Console.WriteLine(peopleResponse.Results[0].Starships[0]);
+                //await GetStarShips(peopleResponse.Results[0].Starships);
+            }
         }
 
-        public static async Task GetStarShips()
+        public static async Task GetStarShips(List<string> starshipUrls)
         {
-            var starShipList = new List<Starship>();
+            foreach (var line in starshipUrls)
+            {
+                string substringUrl = line.Substring(22);
 
-            // Gets all the starships
-            for (int i = 1; i <= 4; i++)
-            {
-                var client = new RestClient("https://swapi.dev/api/");
-                var request = new RestRequest($"starships/?page={i}", DataFormat.Json);
+                var client = new RestClient("https://swapi.dev/api");
+                var request = new RestRequest(substringUrl, DataFormat.Json);
                 var shipResponse = await client.GetAsync<StarShipResponse>(request);
-                foreach (var s in shipResponse.Results)
+
+                foreach (var b in shipResponse.Results)
                 {
-                    starShipList.Add(s);
+                    Console.WriteLine($"{b.Model} - Name: {b.Name} ");
                 }
-            }
-            foreach (var ship in starShipList)
-            {
-                Console.WriteLine($"Name:{ship.Name} Length:{ship.Length}");
             }
         }
     }
