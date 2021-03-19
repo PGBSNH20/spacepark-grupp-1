@@ -1,4 +1,5 @@
 ﻿using SpaceParkModel.Data;
+using SpaceParkModel.SwApi;
 using System;
 using System.Collections.Generic;
 
@@ -8,8 +9,22 @@ namespace SpaceParkConsole
     {
         static void Main(string[] args)
         {
-            SwApi peopleApi = new SwApi();
-            List<Person> people = peopleApi.GetPeople().Result;
+            SwApi swApi = new SwApi();
+            //var allStarships = swApi.GetAllReources<SwStarshipsResult>(SwApiResource.starships).Result;
+            //var data = swApi.GetAllReources<SwPeopleResult>(SwApiResource.people).Result;
+            var data = swApi.GetAllResources<SwStarshipsResult>(SwApiResource.starships).Result;
+            //List<SwPeopleResult> peopleGeneric = swApi.GetResourcePage<SwPeopleResult>(SwApiResource.people).Result;
+            //List<SwPeopleResult> searchedPerson = swApi.SearchPeople("Luke Skywalker").Result;
+            ////List<SwStarshipsResult> starships = swApi.GetAllStarships().Result;
+            ///
+            foreach (var item in data)
+            {
+                Console.WriteLine(item.Name);
+                //Console.WriteLine(item.Starships);
+            }
+
+            //GetResourcePage<SwPeopleResult>()
+
             Console.ReadKey();
         }
     }
