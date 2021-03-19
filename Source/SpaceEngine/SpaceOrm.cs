@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,18 +30,24 @@ namespace SpaceEngine
 
         public static async Task GetStarShips(List<string> starshipUrls)
         {
-            foreach (var line in starshipUrls)
+            List<Starship> ships = new();
+            foreach (var url in starshipUrls)
             {
-                string substringUrl = line.Substring(21);
+                var client = new RestClient(url);
+                var request = new RestRequest(Method.GET);
+                var response = await client.GetAsync<Starship>(request);
+                ships.Add(response);
+            }
+            if (ships.Count != 0)
+            {
+                string[] shipOptions = ships.Select(s => s.Name).ToArray();
+                int selection = Menu.ShowMenu("\nChoose your ship", shipOptions);
 
-                var client = new RestClient("https://swapi.dev/api/");
-                var request = new RestRequest(substringUrl, DataFormat.Json);
-                var shipResponse = await client.GetAsync<StarShipResponse>(request);
-
-                foreach (var b in shipResponse.Results)
-                {
-                    Console.WriteLine($"{b.Model} - Name: {b.Name} ");
-                }
+                Console.WriteLine("You selected" + " " + ships[selection].Name);
+            }
+            else
+            {
+                Console.WriteLine("You have no ships");
             }
         }
     }
