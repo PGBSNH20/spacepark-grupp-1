@@ -14,5 +14,6 @@ namespace SpaceEngine
         public string Name { get; set; }
         public int Height { get; set; }
         public string Gender { get; set; }
+        public List<string> StarShips { get; set; }
     }
 }
