@@ -42,18 +42,18 @@ namespace SpaceEngine
             return peopleResponse.Results[selection];
         }
 
-        public static async Task<Starship> GetStarShips(List<string> starshipUrls)
+        public static async Task<Starship> GetStarShips(Character character)
         {
-            List<Starship> ships = new();
+            List<Starship> ships = await ValidateStarship(character.StarShips);
             int selection = -1;
 
-            foreach (var url in starshipUrls)
-            {
-                var client = new RestClient(url);
-                var request = new RestRequest(Method.GET);
-                var response = await client.GetAsync<Starship>(request);
-                ships.Add(response);
-            }
+            //foreach (var url in starshipUrls)
+            //{
+            //    var client = new RestClient(url);
+            //    var request = new RestRequest(Method.GET);
+            //    var response = await client.GetAsync<Starship>(request);
+            //    ships.Add(response);
+            //}
 
             if (ships.Count != 0)
             {
@@ -76,6 +76,21 @@ namespace SpaceEngine
             var request = new RestRequest($"people/?search={input}", DataFormat.Json);
             var peopleResponse = await client.GetAsync<PeopleReponse>(request);
             return peopleResponse;
+        }
+
+        public static async Task<List<Starship>> ValidateStarship(List<string> starshipUrls)
+        {
+            List<Starship> ships = new();
+
+            foreach (var url in starshipUrls)
+            {
+                var client = new RestClient(url);
+                var request = new RestRequest(Method.GET);
+                var response = await client.GetAsync<Starship>(request);
+                ships.Add(response);
+            }
+
+            return ships;
         }
     }
 }

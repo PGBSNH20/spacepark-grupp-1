@@ -10,7 +10,7 @@ namespace SpaceEngine
         {
             bool menuGoing = true;
             Character character = await SpaceOrm.CharacterSelection();
-            Starship starship = await SpaceOrm.GetStarShips(character.StarShips);
+            Starship starship = await SpaceOrm.GetStarShips(character);
 
             while (menuGoing)
             {

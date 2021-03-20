@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 using SpaceEngine;
+using System.Collections.Generic;
 
 namespace SpaceParkTests
 {
@@ -27,5 +28,33 @@ namespace SpaceParkTests
             bool isTraveler = character.Result.Results.Count == 1;
             Assert.False(isTraveler);
         }
+
+        [Theory]
+        [InlineData("https://swapi.dev/api/starships/12/", "https://swapi.dev/api/starships/16/")]
+        public void ValidateStarship_CorrectInpute_ExpectTrue(string input, string input2)
+        {
+            List<string> ships = new();
+            ships.Add(input);
+            ships.Add(input2);
+
+            var ship = SpaceOrm.ValidateStarship(ships);
+            bool isShip = ship.Result.Count == 2;
+            Assert.True(isShip);
+        }
+
+        [Theory]
+        [InlineData("https://facebook.com", "https://twitter.com/")]
+        public void ValidateStarship_IncorrectInpute_ExpectFalse(string input, string input2)
+        {
+            List<string> ships = new();
+            ships.Add(input);
+            ships.Add(input2);
+
+            var ship = SpaceOrm.ValidateStarship(ships);
+            bool isShip = ship.Result.Count == 2;
+            Assert.False(isShip);
+        }
+
+
     }
 }
