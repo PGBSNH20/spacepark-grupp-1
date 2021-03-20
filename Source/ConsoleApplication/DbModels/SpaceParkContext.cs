@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace SpacePort
 {
-    class MyContext: DbContext
+    class SpaceParkContext: DbContext
     {
-        public DbSet<OrderDetails> OrderDetails { get; set; }
-        public DbSet<Order> Orders { get; set; }
+       // public DbSet<PersonData> Person { get; set; }
+        public DbSet<StarshipData> Starship { get; set; }
+       // public DbSet<> Occupancy { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

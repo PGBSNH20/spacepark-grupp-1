@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpacePort;
 
 namespace SpacePort.Migrations
 {
     [DbContext(typeof(SpaceParkContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20210319154352_ChangedPrimaryKey")]
+    partial class ChangedPrimaryKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,6 @@ namespace SpacePort.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StarshipID")
-                        .HasColumnType("int");
 
                     b.HasKey("ID");
 

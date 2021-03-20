@@ -12,7 +12,7 @@ namespace SpacePort
 
 
         private static readonly RestClient client = new RestClient("https://swapi.dev/api/");
-        public static async Task<IRestResponse> GetPersonResponse(string name)
+        public  async Task<IRestResponse> GetPersonResponse(string name)
         {
             var request = new RestRequest("people/?search=" + name, DataFormat.Json);
             var response = client.ExecuteAsync<PersonResponse>(request);
@@ -20,29 +20,34 @@ namespace SpacePort
             return await response;
         }
 
-        public static async Task<IRestResponse> GetSpaceshipResponse(string name)
+        public  async Task<IRestResponse> GetSpaceshipResponseByIndex(int number)
         {
-            var request = new RestRequest("starships/?search=" + name, DataFormat.Json);
-            var response = client.ExecuteAsync<StarshipResponse>(request);
+            var request = new RestRequest("starships/"+ number+"/", DataFormat.Json);
+            var response = client.ExecuteAsync<StarshipData>(request);
 
             return await response;
         }
 
 
 
-        public static PersonData GetPerson(string name)
+        public  PersonData GetPerson(string name)
         {
-            var dataResponse = GetPersonResponse(name);
-            var data = JsonConvert.DeserializeObject<PersonResponse>(dataResponse.Result.Content);
-            return data.Results[0];
+            
+                var dataResponse = GetPersonResponse(name);
+                var data = JsonConvert.DeserializeObject<PersonResponse>(dataResponse.Result.Content);
+                return data.Results[0];
+           
+            
         }
 
-        public static StarshipData GetSpaceShip(string name)
-        {
-            var dataResponse = GetSpaceshipResponse(name);
-            var data = JsonConvert.DeserializeObject<StarshipResponse>(dataResponse.Result.Content);
 
-            return data.Results[0];
+
+        public StarshipData GetSpaceShip(int number)
+        {
+            var dataResponse = GetSpaceshipResponseByIndex(number);
+            var data = JsonConvert.DeserializeObject<StarshipData>(dataResponse.Result.Content);
+
+            return data;
         }
     }
 }

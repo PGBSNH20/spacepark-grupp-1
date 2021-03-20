@@ -31,13 +31,28 @@ namespace SpacePort
             //    Console.WriteLine(item.name);
             //}
 
-            PersonData a = new PersonData();
-            a=APIFetch.GetPerson("Luke Skywalker");
-            Console.WriteLine(a.Name);
+            //APIFetch a = new APIFetch();
+            //var result = a.GetPerson("Luke Skywalker");
 
-            Console.WriteLine();
+
+
+            //foreach (var item in result.Starships)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            StartMenu a = new StartMenu();
+            a.ValidateName("Luke Skywalker");
+            a.AddToDataBase();
            
             
+            // a.Printint();
+            Console.WriteLine();
+
+            // APIFetch a = new APIFetch();
+            //Console.WriteLine( a.GetSpaceShip(12).Name);
+
+
             Console.ReadKey();
 
         }
