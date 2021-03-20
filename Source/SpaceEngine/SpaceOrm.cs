@@ -11,19 +11,17 @@ namespace SpaceEngine
     public class SpaceOrm
     {
         // Using the API search function to get the Character
-        public static async Task<Character> ValidateCharacter()
+        public static async Task<Character> CharacterSelection()
         {
             bool characterSelection = true;
-            PeopleReponse peopleResponse = new PeopleReponse();
+            PeopleReponse peopleResponse = new();
             int selection = -1;
             while (characterSelection)
             {
                 Console.WriteLine("Hello Traveler, Welcome to SpacePark!\n");
                 Console.Write("Enter your name: ");
                 string input = Console.ReadLine();
-                var client = new RestClient("https://swapi.dev/api/");
-                var request = new RestRequest($"people/?search={input}", DataFormat.Json);
-                peopleResponse = await client.GetAsync<PeopleReponse>(request);
+                peopleResponse = await ValidateCharacter(input);
                 if (peopleResponse.Results.Count != 0)
                 {
                     string[] characters = peopleResponse.Results.Select(x => x.Name).ToArray();
@@ -70,6 +68,14 @@ namespace SpaceEngine
             }
             Console.Clear();
             return ships[selection];
+        }
+
+        public static async Task<PeopleReponse> ValidateCharacter(string input)
+        {
+            var client = new RestClient("https://swapi.dev/api/");
+            var request = new RestRequest($"people/?search={input}", DataFormat.Json);
+            var peopleResponse = await client.GetAsync<PeopleReponse>(request);
+            return peopleResponse;
         }
     }
 }

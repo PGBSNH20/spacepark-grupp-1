@@ -9,7 +9,7 @@ namespace SpaceEngine
         public static async Task Main(string[] args)
         {
             bool menuGoing = true;
-            Character character = await SpaceOrm.ValidateCharacter();
+            Character character = await SpaceOrm.CharacterSelection();
             Starship starship = await SpaceOrm.GetStarShips(character.StarShips);
 
             while (menuGoing)
