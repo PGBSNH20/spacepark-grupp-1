@@ -38,8 +38,8 @@ namespace SpaceEngine
                     var option = options[i];
                     if (i == selected)
                     {
-                        Console.BackgroundColor = ConsoleColor.Blue;
-                        Console.ForegroundColor = ConsoleColor.White;
+                        //Console.BackgroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                     }
                     Console.WriteLine("- " + option);
                     Console.ResetColor();
@@ -49,11 +49,19 @@ namespace SpaceEngine
                 key = Console.ReadKey().Key;
                 if (key == ConsoleKey.DownArrow)
                 {
-                    selected = Math.Min(selected + 1, options.Length - 1);
+                    selected++;
+                    if (selected > options.Length - 1)
+                    {
+                        selected = 0;
+                    }
                 }
                 else if (key == ConsoleKey.UpArrow)
                 {
-                    selected = Math.Max(selected - 1, 0);
+                    selected--;
+                    if (selected < 0)
+                    {
+                        selected = options.Length - 1;
+                    }
                 }
             }
 
