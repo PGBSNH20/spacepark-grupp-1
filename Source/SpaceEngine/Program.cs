@@ -8,18 +8,13 @@ namespace SpaceEngine
     {
         public static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello Traveler, Welcome to SpacePark!\n");
-            Console.Write("Enter your name: ");
-            string input = Console.ReadLine();
-            await SpaceOrm.ValidateCharacter(input);
-
             bool menuGoing = true;
-            Console.WriteLine("Welcome!");
-            Console.WriteLine();
+            Character character = await SpaceOrm.ValidateCharacter();
+            Starship starship = await SpaceOrm.GetStarShips(character.StarShips);
 
             while (menuGoing)
             {
-                int selectedOption = Menu.ShowMenu("What do you want to do?\n", new[]
+                int selectedOption = Menu.ShowMenu($"What do you want to do {character.Name}?\n", new[]
                 {
                     "Park Vehicle",
                     "Unpark Vehicle",

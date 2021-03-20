@@ -2,7 +2,7 @@
 
 namespace SpaceEngine
 {
-    internal class StarShipResponse
+    public class StarShipResponse
     {
         public List<Starship> Results { get; set; }
     }
