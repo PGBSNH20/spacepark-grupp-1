@@ -2,6 +2,8 @@
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
+using System.Globalization;
 
 namespace SpaceEngine
 {
@@ -9,6 +11,7 @@ namespace SpaceEngine
     {
         public static async Task Main(string[] args)
         {
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             bool menuGoing = true;
             Character character = await SpaceORM.CharacterSelection();
             Starship starship = await SpaceORM.GetStarShips(character);
@@ -22,7 +25,10 @@ namespace SpaceEngine
                     "Show parking history",
                      "Exit"
                 });
-
+                if (selectedOption == 0)
+                {
+                    // Add Park Method
+                }
                 if (selectedOption == 3)
                 {
                     menuGoing = false;

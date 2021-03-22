@@ -9,8 +9,20 @@ namespace SpaceEngine
 {
     public class MyContext : DbContext
     {
-        public DbSet<Character> Character { get; set; }
-        public DbSet<Starship> StarShip { get; set; }
+        //public DbSet<Character> Character { get; set; }
+        //public DbSet<Starship> StarShip { get; set; }
+
+        public DbSet<Parkingspot> Parkingspots { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            for (int i = 1; i < 6; i++)
+            {
+                modelBuilder.Entity<Parkingspot>().HasData(
+                    new Parkingspot() { ID = i, MinSize = 0, MaxSize = 500}
+                    );
+            }
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

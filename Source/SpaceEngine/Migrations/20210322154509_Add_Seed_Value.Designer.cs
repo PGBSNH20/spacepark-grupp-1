@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpaceEngine;
 
 namespace SpaceEngine.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20210322154509_Add_Seed_Value")]
+    partial class Add_Seed_Value
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,30 +47,6 @@ namespace SpaceEngine.Migrations
                         new
                         {
                             ID = 1,
-                            MaxSize = 500,
-                            MinSize = 0
-                        },
-                        new
-                        {
-                            ID = 2,
-                            MaxSize = 500,
-                            MinSize = 0
-                        },
-                        new
-                        {
-                            ID = 3,
-                            MaxSize = 500,
-                            MinSize = 0
-                        },
-                        new
-                        {
-                            ID = 4,
-                            MaxSize = 500,
-                            MinSize = 0
-                        },
-                        new
-                        {
-                            ID = 5,
                             MaxSize = 500,
                             MinSize = 0
                         });
