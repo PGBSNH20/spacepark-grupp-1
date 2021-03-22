@@ -9,7 +9,7 @@ namespace SpacePort
 {
     class SpaceParkContext: DbContext
     {
-        public DbSet<Person> Person { get; set; }
+        public DbSet<PersonDb> Person { get; set; }
         public DbSet<StarshipData> Starship { get; set; }
        // public DbSet<> Occupancy { get; set; }
 

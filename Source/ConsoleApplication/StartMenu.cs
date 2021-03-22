@@ -8,7 +8,7 @@ namespace SpacePort
 {
     public class StartMenu
     {
-        public APIFetch Person =new APIFetch();
+       // public APIFetch Person =new APIFetch();
 
         public List<string> URLStringListToGetShipID = new List<string>();
         public List<int> starShipsIntList = new List<int>();
@@ -28,7 +28,7 @@ namespace SpacePort
         public void ValidateName(string name)
         {
            
-            var x = Person.GetPerson(name);
+            var x = APIFetch.GetPerson(name);
             
            
             if (x.Name == name)
@@ -45,7 +45,7 @@ namespace SpacePort
 
         public void  GetShipListByName(string name)
         {
-           var x=  Person.GetPerson(name);
+           var x= APIFetch.GetPerson(name);
 
             foreach (var item in x.Starships)
             {
@@ -104,7 +104,7 @@ namespace SpacePort
 
             for (int i = 0; i < starShipsIntList.Count; i++)
             {
-               starshipsAvailable.Add( Person.GetSpaceShip(starShipsIntList[i]));
+               starshipsAvailable.Add(APIFetch.GetSpaceShip(starShipsIntList[i]));
             }
 
             ValidateShip();
@@ -138,7 +138,7 @@ namespace SpacePort
 
         public void GetShipByIndex()
         {
-           var x= Person.GetSpaceShip(ConfirmedShipID);
+           var x= APIFetch.GetSpaceShip(ConfirmedShipID);
             CStarship = x;
             Print();
         }
@@ -169,7 +169,7 @@ namespace SpacePort
                 Model = CStarship.Model
             };
 
-            var person = new Person()
+            var person = new PersonDb()
             {
                 PersonID = CPersonID,
                 Name = CPerson.Name,

@@ -12,7 +12,7 @@ namespace SpacePort
 
 
         private static readonly RestClient client = new RestClient("https://swapi.dev/api/");
-        public  async Task<IRestResponse> GetPersonResponse(string name)
+        private static async Task<IRestResponse> GetPersonResponse(string name)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace SpacePort
             }            
         }
 
-        public  async Task<IRestResponse> GetSpaceshipResponseByIndex(int number)
+        private static async Task<IRestResponse> GetSpaceshipResponseByIndex(int number)
         {
             var request = new RestRequest("starships/"+ number+"/", DataFormat.Json);
             var response = client.ExecuteAsync<StarshipData>(request);
@@ -39,7 +39,7 @@ namespace SpacePort
 
 
 
-        public  PersonData GetPerson(string name)
+        public static PersonData GetPerson(string name)
         {           
                 var dataResponse = GetPersonResponse(name);
                 var data = JsonConvert.DeserializeObject<PersonResponse>(dataResponse.Result.Content);
@@ -48,7 +48,7 @@ namespace SpacePort
 
 
 
-        public StarshipData GetSpaceShip(int number)
+        public static StarshipData GetSpaceShip(int number)
         {
             var dataResponse = GetSpaceshipResponseByIndex(number);
             var data = JsonConvert.DeserializeObject<StarshipData>(dataResponse.Result.Content);
