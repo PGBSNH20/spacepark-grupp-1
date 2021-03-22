@@ -14,10 +14,19 @@ namespace SpacePort
         private static readonly RestClient client = new RestClient("https://swapi.dev/api/");
         public  async Task<IRestResponse> GetPersonResponse(string name)
         {
-            var request = new RestRequest("people/?search=" + name, DataFormat.Json);
-            var response = client.ExecuteAsync<PersonResponse>(request);
+            try
+            {
+                var request = new RestRequest("people/?search=" + name, DataFormat.Json);
+                var response = client.ExecuteAsync<PersonResponse>(request);
 
-            return await response;
+                return await response;
+            }
+            catch (Exception)
+            {
+
+                Console.WriteLine("User not found");
+                return null;
+            }            
         }
 
         public  async Task<IRestResponse> GetSpaceshipResponseByIndex(int number)
@@ -31,13 +40,10 @@ namespace SpacePort
 
 
         public  PersonData GetPerson(string name)
-        {
-            
+        {           
                 var dataResponse = GetPersonResponse(name);
                 var data = JsonConvert.DeserializeObject<PersonResponse>(dataResponse.Result.Content);
-                return data.Results[0];
-           
-            
+                return data.Results[0];                       
         }
 
 

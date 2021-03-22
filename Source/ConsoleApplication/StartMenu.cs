@@ -10,15 +10,17 @@ namespace SpacePort
     {
         public APIFetch Person =new APIFetch();
 
-        public List<string> URLStringList = new List<string>();
+        public List<string> URLStringListToGetShipID = new List<string>();
         public List<int> starShipsIntList = new List<int>();
         public List<StarshipData> starshipsAvailable = new List<StarshipData>();
-        public int ConfirmedShipID { get; set; }
+        
+
         // public List<PersonData> confirmedPeople = new List<PersonData>();
 
         public PersonData CPerson { get; set; }
         public StarshipData CStarship { get; set; }
-        
+        public int ConfirmedShipID { get; set; }
+        public int CPersonID { get; set; }
 
 
 
@@ -27,12 +29,14 @@ namespace SpacePort
         {
            
             var x = Person.GetPerson(name);
+            
            
             if (x.Name == name)
             {
                
                 Console.WriteLine("Welcome "+name);
                 CPerson = x;
+                CPersonID = GetPersonID(x.url);
                 GetShipListByName(name);
                 //ChooseShip();
 
@@ -45,7 +49,7 @@ namespace SpacePort
 
             foreach (var item in x.Starships)
             {
-                URLStringList.Add(item);
+                URLStringListToGetShipID.Add(item);
             }
             
             GetStarShipList();
@@ -53,16 +57,32 @@ namespace SpacePort
 
         public void GetStarShipList()
         {
-            for (int i = 0; i < URLStringList.Count; i++)
+            for (int i = 0; i < URLStringListToGetShipID.Count; i++)
             {
-                GetID(URLStringList[i]);
+                GetShipID(URLStringListToGetShipID[i]);
             }
 
             AddStarShipsToList();
         }
 
+        public int GetPersonID(string input)
+        {
 
-        public List<int> GetID(string input)
+            string toDidital = string.Empty;
+            int val;
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (Char.IsDigit(input[i]))
+                    toDidital += input[i];
+            }
+            val = int.Parse(toDidital);
+            
+
+            return val;
+        }
+
+        public List<int> GetShipID(string input)
         {
 
             string toDidital = string.Empty;
@@ -130,9 +150,11 @@ namespace SpacePort
             Console.WriteLine("All details has been saved to DataBase Welcome in!");
             
                 Console.WriteLine($"Name:{CPerson.Name}" /*Model:{item.Model}*/);
-            
-           
-                Console.WriteLine($"ShipID:{CStarship.Name}" /*Model:{item.Model}*/);
+                
+
+
+
+            Console.WriteLine($"ShipID:{CStarship.Name}" /*Model:{item.Model}*/);
             
 
         }
@@ -140,13 +162,22 @@ namespace SpacePort
         public void AddToDataBase()
         {
             SpaceParkContext context = new SpaceParkContext();
-            var data = new StarshipData()
+            var ship = new StarshipData()
             {
                 Name = CStarship.Name,
-                StarshipID= ConfirmedShipID,
+                StarshipID = ConfirmedShipID,
                 Model = CStarship.Model
             };
-            context.Add(data);
+
+            var person = new Person()
+            {
+                PersonID = CPersonID,
+                Name = CPerson.Name,
+                StarshipID= ConfirmedShipID
+
+            };
+                context.Add(ship);
+            context.Add(person);
             context.SaveChanges();
 
 

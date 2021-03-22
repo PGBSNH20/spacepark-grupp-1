@@ -9,7 +9,7 @@ namespace SpacePort
 {
     class SpaceParkContext: DbContext
     {
-       // public DbSet<PersonData> Person { get; set; }
+        public DbSet<Person> Person { get; set; }
         public DbSet<StarshipData> Starship { get; set; }
        // public DbSet<> Occupancy { get; set; }
 
@@ -17,6 +17,7 @@ namespace SpacePort
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server = DESKTOP-7NBHFKN; Database = CodeFirst; Trusted_Connection = True;");
+            
         }
     }
 }

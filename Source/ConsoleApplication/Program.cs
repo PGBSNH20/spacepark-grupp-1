@@ -42,12 +42,12 @@ namespace SpacePort
             //}
 
             StartMenu a = new StartMenu();
-            a.ValidateName("Luke Skywalker");
-            a.AddToDataBase();
+            a.ValidateName("Darth Maul");
+            //a.AddToDataBase();
            
             
             // a.Printint();
-            Console.WriteLine();
+           // Console.WriteLine();
 
             // APIFetch a = new APIFetch();
             //Console.WriteLine( a.GetSpaceShip(12).Name);
