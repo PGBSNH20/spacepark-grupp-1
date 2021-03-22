@@ -9,7 +9,6 @@ namespace SpaceParkModel.SwApi
     public class SwPeople
     {
         public string Name { get; set; }
-        //public List<SwStarshipsResult> Starships { get; set; }
-        public string Starships { get; set; }
+        public List<string> Starships { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpaceParkModel.Data;
+using SpaceParkModel.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,9 @@ namespace SpaceParkModel
     {
         public DbSet<Occupancy> Occupancies { get; set; }
         public DbSet<Person> Persons { get; set; }
-        public DbSet<PriceBreakPoint> PriceBreakPoints { get; set; }
         public DbSet<Spaceship> Spaceships { get; set; }
+        public DbSet<ParkingSize> ParkingSizes { get; set; }
+        public DbSet<ParkingSpots> ParkingSpots { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

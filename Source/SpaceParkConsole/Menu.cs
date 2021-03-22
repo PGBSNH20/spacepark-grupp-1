@@ -1,4 +1,7 @@
-﻿using SpaceParkModel.Data;
+﻿using SpaceParkModel;
+using SpaceParkModel.Data;
+using SpaceParkModel.Database;
+using SpaceParkModel.SwApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +12,7 @@ namespace SpaceParkConsole
 {
     class Menu
     {
-        SwApi swApi;
+        private readonly SwApi swApi;
         public string ActivePerson { get; set; }
 
         public Menu()
@@ -17,7 +20,7 @@ namespace SpaceParkConsole
             swApi = new SwApi();
         }
 
-        public int Show(string prompt, string[] options)
+        public static int Show(string prompt, string[] options)
         {
             if (options == null || options.Length == 0)
             {
@@ -71,7 +74,7 @@ namespace SpaceParkConsole
             return selected;
         }
 
-        public bool PromptName()
+        public bool ShowNamePrompt()
         {
             Console.WriteLine("Please enter your name: ");
             string nameAnswer = Console.ReadLine();
@@ -86,39 +89,107 @@ namespace SpaceParkConsole
             int selection = Show("Sorry, looks like you entered an invalid name... what would you like to do?", options);
             if (selection == 0)
             {
-                PromptName();
+                ShowNamePrompt();
             }
 
-            //Environment.Exit(0);
             return false;
-            // check if person is valid *
-            // if person is valid => store the name *
-            //  => then return true *
-            // if person is invalid => then what?
-            //  => give option to reenter name and/or quit?
-            //  => return false *
-            // what do we return? the name or booleans? => bool * 
-
         }
 
         public void MainMenu()
         {
-            string[] options = { "Do you want to park? ", "Pay and leave", "Quit" };
-            int selection = 0;
-
-            while (selection != options.Length - 1)
+            // TODO: changed quit to logout if logged in.
+            // TODO: if you are in the spaceship options -> add a Quit option
+            string[] options = { "Park", "Quit" };
+            bool isCheckedIn = DBQuery.IsCheckedIn(ActivePerson);
+            if (isCheckedIn)
             {
-                selection = Show("Welcome to SpacePark, what would you like to do?", options);
-                switch (selection)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        break;
-                    default:
-                        break;
-                }
+                options = new string[] { "Pay and leave", "Quit" };
             }
+
+            int selection = Show("Menu:", options);
+
+            if (selection == options.Length - 1)
+            {
+                Environment.Exit(0);
+            }
+            else if (isCheckedIn && selection == 0)
+            {
+                // sends you to pay, then to print receipt etc..
+                ShowPayAndLeave();
+                Console.Clear();
+                ShowNamePrompt();
+            }
+            else if (!isCheckedIn && selection == 0)
+            {
+                ShowParkingMenu();
+            }
+            MainMenu();
+        }
+
+        private void ShowParkingMenu()
+        {
+            // TODO: ==> if parking spots are full => check if bigger spot is open and offer it (yes/no), if not then quit
+
+            List<SwStarship> starships = swApi.GetPersonStarships(ActivePerson);
+
+            if (starships.Count == 0)
+            {
+                Console.WriteLine("Hitchhikers get expelled into space, goodbye!");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+
+            // Getting the Names for the menu
+            string[] starshipOptions = starships.Select(starship => starship.Name).ToArray();
+            int selection = Show("Please select your spaceship.", starshipOptions);
+            SwStarship starship = starships[selection];
+
+            double starshipLength = starship.Length;
+
+            // get all parking spot sizes
+            List<ParkingSize> parkingSizes = DBQuery.GetParkingSizes();
+
+            // find appropriate parking spot size (smallest size the ship will fit in)
+            ParkingSize appropriateParkingSize = parkingSizes.Where(p => p.Size > starshipLength).OrderBy(p => p.Size).First();
+
+            // check if there is a free spot for that size in the database and get the id
+            int availableParkingSpotID = DBQuery.GetAvailableParking(appropriateParkingSize.ID);
+
+            // TODO: test this at some point...
+            // create occupancy for person/starship
+            if (availableParkingSpotID == 0)
+            {
+                Console.WriteLine("Sorry... No parking spot available");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+            DBQuery.FillOccupancy(ActivePerson, starship.Name, availableParkingSpotID);
+        }
+
+        private void ShowPayAndLeave()
+        {
+            Occupancy occupancy = DBQuery.GetOpenOccupancyByName(ActivePerson);
+            int parkingSpotID = occupancy.ParkingSpotID;
+            int parkingSizeID = DBQuery.GetParkingSizeIDBySpot(parkingSpotID);
+            decimal parkingSpotPrice = DBQuery.GetParkingSpotPriceByID(parkingSizeID);
+
+            TimeSpan parkingDuration = DateTime.Now - occupancy.ArrivalTime;
+            decimal billingHours = Convert.ToDecimal(Math.Ceiling(parkingDuration.TotalHours));
+
+            decimal totalPrice = billingHours * parkingSpotPrice;
+
+            occupancy.DepartureTime = DateTime.Now;
+            DBQuery.UpdateOccupancy(occupancy);
+
+            ShowInvoiceAndLogout(totalPrice, billingHours);
+        }
+
+        private void ShowInvoiceAndLogout(decimal totalPrice, decimal billingHours)
+        {
+            Console.WriteLine($"Thank you for choosing us {ActivePerson}. You paid {totalPrice} for {billingHours} hours.");
+            ActivePerson = "";
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
     }
 }

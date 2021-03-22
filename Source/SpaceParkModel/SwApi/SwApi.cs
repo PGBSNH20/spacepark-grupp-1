@@ -44,6 +44,12 @@ namespace SpaceParkModel.Data
             return await client.GetAsync<SwResource<T>>(request);
         }
 
+        private async Task<T> GetResource<T>(string resource)
+        {
+            var request = new RestRequest(resource, DataFormat.Json);
+            return await client.GetAsync<T>(request);
+        }
+
         public async Task<List<T>> SearchResource<T>(SwApiResource resource, string searchTerm)
         {
             var request = new RestRequest($"{resource}/?search={searchTerm}", DataFormat.Json);
@@ -56,6 +62,22 @@ namespace SpaceParkModel.Data
         {
             var names = SearchResource<SwPeople>(SwApiResource.people, name).Result;
             return names.Count > 0;
+        }
+
+        public List<SwStarship> GetPersonStarships(string name)
+        {
+            List<SwStarship> starships = new();
+            List<SwPeople> people = SearchResource<SwPeople>(SwApiResource.people, name).Result;
+            
+            if (people[0].Starships.Count > 0)
+            {
+                foreach (var starship in people[0].Starships)
+                {
+                    starships.Add(GetResource<SwStarship>(starship).Result);
+                }
+            }
+
+            return starships;
         }
     }
 }
