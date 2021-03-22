@@ -13,7 +13,7 @@ namespace SpaceParkTests
         [InlineData("Darth Vader")]
         public void ValidateCharacter_CorrectInput_ExpectTrue(string input)
         {
-            var character = SpaceOrm.ValidateCharacter(input);
+            var character = SpaceORM.ValidateCharacter(input);
             bool isTraveler = character.Result.Results[0].Name == input;
             Assert.True(isTraveler);
         }
@@ -24,7 +24,7 @@ namespace SpaceParkTests
         [InlineData("Darth Peter")]
         public void ValidateCharacter_IncorrectInput_ExpectFalse(string input)
         {
-            var character = SpaceOrm.ValidateCharacter(input);
+            var character = SpaceORM.ValidateCharacter(input);
             bool isTraveler = character.Result.Results.Count == 1;
             Assert.False(isTraveler);
         }
@@ -36,7 +36,7 @@ namespace SpaceParkTests
             ships.Add(input);
             ships.Add(input2);
 
-            var ship = SpaceOrm.ValidateStarship(ships);
+            var ship = SpaceORM.ValidateStarship(ships);
             bool isShip = ship.Result.Count == 2;
             Assert.True(isShip);
         }

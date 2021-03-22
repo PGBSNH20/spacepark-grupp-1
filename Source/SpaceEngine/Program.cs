@@ -9,61 +9,26 @@ namespace SpaceEngine
     {
         public static async Task Main(string[] args)
         {
-            List<string> test = new List<string>();
-            test.Add("https://swapi.dev/api/starships/16/");
+            bool menuGoing = true;
+            Character character = await SpaceORM.CharacterSelection();
+            Starship starship = await SpaceORM.GetStarShips(character);
 
-            var vader = SpaceOrm.ValidateStarship(test);
-
-            foreach (var a in vader)
+            while (menuGoing)
             {
-                Console.WriteLine(a.re);
+                int selectedOption = Menu.ShowMenu($"What do you want to do {character.Name}?\n", new[]
+                {
+                    "Park Vehicle",
+                    "Unpark Vehicle",
+                    "Show parking history",
+                     "Exit"
+                });
+
+                if (selectedOption == 3)
+                {
+                    menuGoing = false;
+                    Console.WriteLine("Have a nice day!");
+                }
             }
-
-            Spacepark first = new Spacepark()
-            {
-                Name = "First"
-            };
-
-            Parkingspot.Small hej = new Parkingspot.Small()
-            {
-                Arrival = DateTime.Now,
-                Departure = DateTime.Now.AddHours(1),
-                Starship = vader.Result[0]
-            };
-
-            Console.WriteLine(hej.Starship.Name);
-
-
-
-
-
-
-
-
-
-
-            //bool menuGoing = true;
-            //Character character = await SpaceOrm.CharacterSelection();
-            //Starship starship = await SpaceOrm.GetStarShips(character);
-
-            //while (menuGoing)
-            //{
-            //    int selectedOption = Menu.ShowMenu($"What do you want to do {character.Name}?\n", new[]
-            //    {
-            //        "Park Vehicle",
-            //        "Unpark Vehicle",
-            //        "Show parking history",
-            //         "Exit"
-            //    });
-
-            //    if(selectedOption == 3)
-            //    {
-            //        menuGoing = false;
-            //        Console.WriteLine("Have a nice day!");
-            //    }
-            //}
-
-
         }
     }
 }
