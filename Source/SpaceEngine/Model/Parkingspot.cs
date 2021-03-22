@@ -16,32 +16,40 @@ namespace SpaceEngine
         public string CharacterName { get; set; }
         public string SpaceshipName { get; set; }
 
-        //public Parkingspot(int id, int minSize, int maxSize)
-        //{
-        //    ID = id; 
-        //    MinSize = minSize;
-        //    MaxSize = maxSize;
-        //}
-
         public static void Park(Starship starship, Character character)
         {
-            try
+            var context = new MyContext();
+            Parkingspot alreadyParked;
+            alreadyParked = context.Parkingspots.Where(p => p.CharacterName == character.Name && p.SpaceshipName == starship.Name).FirstOrDefault();
+            if (alreadyParked == null)
             {
-                var context = new MyContext();
+
                 var parking = context.Parkingspots
                     .Where(p => p.MinSize < double.Parse(starship.Length)
                     && p.MaxSize > double.Parse(starship.Length)
-                    && p.SpaceshipName == null).First();
-                parking.SpaceshipName = starship.Name;
-                parking.CharacterName = character.Name;
-                context.SaveChanges();
+                    && p.SpaceshipName == null).FirstOrDefault();
+                if (parking != null)
+                {
+                    parking.SpaceshipName = starship.Name;
+                    parking.CharacterName = character.Name;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("No parkings available");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                }
             }
-            catch (Exception)
+            else
             {
                 Console.Clear();
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("No parkings available");
+                Console.WriteLine("You have already parked that Starship");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine();
             }

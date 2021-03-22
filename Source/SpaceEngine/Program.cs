@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
+using SpaceEngine.Utils;
 
 namespace SpaceEngine
 {
@@ -13,9 +14,11 @@ namespace SpaceEngine
         {
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             bool menuGoing = true;
+
+            Print.AvailableSpots();
+            
             Character character = await SpaceORM.CharacterSelection();
             Starship starship = await SpaceORM.GetStarShips(character);
-
             while (menuGoing)
             {
                 int selectedOption = Menu.ShowMenu($"What do you want to do {character.Name}?\n", new[]
