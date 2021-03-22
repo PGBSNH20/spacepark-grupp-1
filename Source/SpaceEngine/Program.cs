@@ -27,7 +27,7 @@ namespace SpaceEngine
                 });
                 if (selectedOption == 0)
                 {
-                    // Add Park Method
+                    Parkingspot.Park(starship, character);
                 }
                 if (selectedOption == 3)
                 {
