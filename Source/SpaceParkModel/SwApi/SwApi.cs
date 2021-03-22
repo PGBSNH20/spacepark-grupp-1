@@ -51,5 +51,11 @@ namespace SpaceParkModel.Data
             List<T> datas = response.Results;
             return datas;
         }
+
+        public bool ValidateSwName(string name)
+        {
+            var names = SearchResource<SwPeople>(SwApiResource.people, name).Result;
+            return names.Count > 0;
+        }
     }
 }
