@@ -16,7 +16,7 @@ namespace SpaceEngine
             bool menuGoing = true;
 
             Print.AvailableSpots();
-            
+
             Character character = await SpaceORM.CharacterSelection();
             Starship starship = await SpaceORM.GetStarShips(character);
             while (menuGoing)
@@ -49,3 +49,9 @@ namespace SpaceEngine
         }
     }
 }
+// TODO: Separate menu from SpaceORM
+// TODO: Close DB Connections
+// TODO: Add try again option for entering character name
+// TODO: More unit tests
+// TODO: Add more todo's where you see fit
+
