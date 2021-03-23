@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpaceEngine.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -71,6 +72,16 @@ namespace SpaceEngine
                 Console.Clear();
                 Console.WriteLine($"\nTotal cost for the parking: {price}\n");
 
+                Receipt receipt = new Receipt
+                {
+                    StarshipName = starship.Name,
+                    Name = character.Name,
+                    Arrival = parked.Arrival,
+                    Departure = Departure,
+                    Parkingspot = parked,
+                    TotalAmount = price
+                };
+                context.Receipts.Add(receipt);
                 parked.CharacterName = null;
                 parked.SpaceshipName = null;
                 parked.Arrival = default;
