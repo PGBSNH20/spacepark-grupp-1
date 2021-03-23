@@ -38,7 +38,7 @@ namespace SpaceEngine
                 }
                 else if (selectedOption == 2)
                 {
-                    Parkingspot.ShowHistory();
+                    Parkingspot.ShowHistory(starship, character);
                 }
                 else 
                 {

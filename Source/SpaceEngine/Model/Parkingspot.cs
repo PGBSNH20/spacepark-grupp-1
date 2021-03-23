@@ -91,23 +91,30 @@ namespace SpaceEngine
             }
         }
 
-        public static void ShowHistory()
+        public static void ShowHistory(Starship starship, Character character)
         {
             using var context = new MyContext();
-            var allReceipts = context.Receipts.Include("Parkingspot").ToList();
+            var characterReceipts = context.Receipts.Where(p => p.Name == character.Name).Include("Parkingspot").ToList();
+            //var allReceipts = context.Receipts.Include("Parkingspot").ToList();
             Console.WriteLine("SpacePark parking history");
             Console.WriteLine();
-            for (int i = 0; i < allReceipts.Count; i++)
+            for (int i = 0; i < characterReceipts.Count; i++)
             {
                 if (i % 2 == 0)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                 }
-                Console.WriteLine($"ID: {allReceipts[i].ID}\n Character: {allReceipts[i].Name}\n Starship: {allReceipts[i].StarshipName}\n Parking size: {allReceipts[i].Parkingspot.MaxSize}meters\n Arrival: {allReceipts[i].Arrival}\n Departure: {allReceipts[i].Departure}\n Total Price:{allReceipts[i].TotalAmount}\n");
+                Console.WriteLine($"ID: {characterReceipts[i].ID}\n " +
+                    $"Character: {characterReceipts[i].Name}\n " +
+                    $"Starship: {characterReceipts[i].StarshipName}\n " +
+                    $"Parking size: {characterReceipts[i].Parkingspot.MaxSize}meters\n " +
+                    $"Arrival: {characterReceipts[i].Arrival}\n " +
+                    $"Departure: {characterReceipts[i].Departure}\n " +
+                    $"Total Price:{characterReceipts[i].TotalAmount}\n");
             }
                 Console.ForegroundColor = ConsoleColor.White;
         }
