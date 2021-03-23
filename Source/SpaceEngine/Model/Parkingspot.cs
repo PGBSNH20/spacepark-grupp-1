@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SpaceEngine
 {
@@ -88,6 +89,27 @@ namespace SpaceEngine
                 context.SaveChanges();
                 Console.WriteLine("You have successfully unparked your vehicle");
             }
+        }
+
+        public static void ShowHistory()
+        {
+            using var context = new MyContext();
+            var allReceipts = context.Receipts.Include("Parkingspot").ToList();
+            Console.WriteLine("SpacePark parking history");
+            Console.WriteLine();
+            for (int i = 0; i < allReceipts.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                }
+                Console.WriteLine($"ID: {allReceipts[i].ID}\n Character: {allReceipts[i].Name}\n Starship: {allReceipts[i].StarshipName}\n Parking size: {allReceipts[i].Parkingspot.MaxSize}meters\n Arrival: {allReceipts[i].Arrival}\n Departure: {allReceipts[i].Departure}\n Total Price:{allReceipts[i].TotalAmount}\n");
+            }
+                Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
