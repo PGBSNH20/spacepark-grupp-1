@@ -8,7 +8,7 @@ using SpaceEngine;
 
 namespace SpaceEngine.Migrations
 {
-    [DbContext(typeof(MyContext))]
+    [DbContext(typeof(SpaceParkContext))]
     [Migration("20210322154801_Add_Seed_Values_Using_For_Loop")]
     partial class Add_Seed_Values_Using_For_Loop
     {

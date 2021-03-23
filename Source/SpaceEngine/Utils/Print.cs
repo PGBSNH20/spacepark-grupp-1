@@ -7,19 +7,21 @@ namespace SpaceEngine.Utils
     {
         public static void AvailableSpots()
         {
-            var context = new MyContext();
-            var parkingsAvailable = context.Parkingspots.Where(p => p.SpaceshipName != null);
-            Console.WriteLine();
-            if (parkingsAvailable.Count() == 5)
+            using (var context = new SpaceParkContext())
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                var parkingsAvailable = context.Parkingspots.Where(p => p.SpaceshipName != null);
+                Console.WriteLine();
+                if (parkingsAvailable.Count() == 5)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                Console.WriteLine($"Parkingsspots occupied [{parkingsAvailable.Count()}/5]\n");
+                Console.ForegroundColor = ConsoleColor.White;
             }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-            }
-            Console.WriteLine($"Parkingsspots occupied [{parkingsAvailable.Count()}/5]\n");
-            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SpaceEngine
 {
-    public class MyContext : DbContext
+    public class SpaceParkContext : DbContext
     {
         //public DbSet<Character> Character { get; set; }
         //public DbSet<Starship> StarShip { get; set; }
@@ -29,7 +29,8 @@ namespace SpaceEngine
             //Data Source=DESKTOP-AI55B02\SQLEXPRESS;Initial Catalog="test database";Integrated Security=True
             //PATRIC - "Server=DESKTOP-KID3QF2\SQLEXPRESS;Database=SpacePark;Trusted_Connection=Yes;
             //JONAS -  "Server=DESKTOP-AI55B02\SQLEXPRESS;Database=SpacePark;Trusted_Connection=Yes;
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-KID3QF2\SQLEXPRESS;Database=SpacePark;Trusted_Connection=Yes;");
+            //ALEJANDRA - "Server=DESKTOP-AFKC3I2\SQLEXPRESS;Database=SpaceParkTeam;Trusted_Connection=Yes;"
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-AFKC3I2\SQLEXPRESS;Database=SpaceParkTeam;Trusted_Connection=Yes;");
         }
     }
 }

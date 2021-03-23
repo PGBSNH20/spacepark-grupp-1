@@ -49,9 +49,5 @@ namespace SpaceEngine
         }
     }
 }
-// TODO: Separate menu from SpaceORM
-// TODO: Close DB Connections
-// TODO: Add try again option for entering character name
-// TODO: More unit tests
-// TODO: Add more todo's where you see fit
+
 
