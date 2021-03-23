@@ -40,10 +40,12 @@ namespace SpacePort
 
 
         public static PersonData GetPerson(string name)
-        {           
+        {
+            
                 var dataResponse = GetPersonResponse(name);
                 var data = JsonConvert.DeserializeObject<PersonResponse>(dataResponse.Result.Content);
-                return data.Results[0];                       
+                return data.Results[0];
+                             
         }
 
 

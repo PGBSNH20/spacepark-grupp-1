@@ -41,8 +41,10 @@ namespace SpacePort
             //    Console.WriteLine(item);
             //}
 
-            StartMenu a = new StartMenu();
-            a.ValidateName("Darth Maul");
+            //StartMenu a = new StartMenu();
+            //a.ValidateName("Darth Maul");
+            Person a = new Person("Luke Skywalker");
+            a.Print();
             //a.AddToDataBase();
            
             
