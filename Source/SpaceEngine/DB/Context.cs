@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SpaceEngine.Model;
 
 namespace SpaceEngine
 {
@@ -13,6 +14,7 @@ namespace SpaceEngine
         //public DbSet<Starship> StarShip { get; set; }
 
         public DbSet<Parkingspot> Parkingspots { get; set; }
+        public DbSet<Receipt> Receipts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
