@@ -32,7 +32,15 @@ namespace SpaceEngine
                 {
                     Parkingspot.Park(starship, character);
                 }
-                if (selectedOption == 3)
+                else if (selectedOption == 1)
+                {
+                    Parkingspot.Unpark(starship, character);
+                }
+                else if (selectedOption == 2)
+                {
+
+                }
+                else 
                 {
                     menuGoing = false;
                     Console.WriteLine("Have a nice day!");
