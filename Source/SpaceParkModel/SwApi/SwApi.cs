@@ -67,11 +67,11 @@ namespace SpaceParkModel.Data
         public List<SwStarship> GetPersonStarships(string name)
         {
             List<SwStarship> starships = new();
-            List<SwPeople> people = SearchResource<SwPeople>(SwApiResource.people, name).Result;
+            SwPeople person = SearchResource<SwPeople>(SwApiResource.people, name).Result.First();
             
-            if (people[0].Starships.Count > 0)
+            if (person.Starships.Count > 0)
             {
-                foreach (var starship in people[0].Starships)
+                foreach (var starship in person.Starships)
                 {
                     starships.Add(GetResource<SwStarship>(starship).Result);
                 }

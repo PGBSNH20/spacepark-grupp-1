@@ -61,10 +61,12 @@ namespace SpaceParkModel
             using (var context = new SpaceParkContext())
             {
                 int personID = GetPersonID(personName);
+
                 return context.Occupancies.Where(o => !o.DepartureTime.HasValue && o.PersonID == personID).First();
             }
         }
 
+        // Used to show history, not for general caching
         private static int AddSpaceship(string spaceshipName)
         {
             using (var context = new SpaceParkContext())
@@ -83,6 +85,7 @@ namespace SpaceParkModel
             }
         }
 
+        // Used to show history, not for general caching
         public static int AddPerson(string personName)
         {
             using (var context = new SpaceParkContext())
@@ -96,7 +99,8 @@ namespace SpaceParkModel
                     context.SaveChanges();
                 }
                 // get person id
-                personID = context.Persons.Where(p => p.Name.Equals(personName)).First().ID;
+                //personID = context.Persons.Where(p => p.Name.Equals(personName)).First().ID;
+                personID = GetPersonID(personName);
                 return personID;
             }
         }
