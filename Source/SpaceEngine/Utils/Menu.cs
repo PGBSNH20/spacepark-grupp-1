@@ -3,11 +3,130 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpaceEngine.Utils;
 
 namespace SpaceEngine
 {
     public class Menu
     {
+
+
+        public static void Start(Character character, Starship starship)
+        {
+           
+            bool menuGoing = true;
+            var context = new MyContext();
+            var parkingsAvailable = context.Parkingspots.Where(p => p.SpaceshipName == starship.Name);
+            if (parkingsAvailable.Any())
+            {
+                while (menuGoing)
+                {
+                    int selectedOption = Menu.ShowMenu($"What do you want to do {character.Name}?\n", new[]
+                    {
+                       
+                        "Unpark Vehicle",
+                        "Show parking history",
+                         "Exit"
+                    });
+                    
+                     if (selectedOption == 0)
+                     {
+                        Parkingspot.Unpark(starship, character);
+                     }
+                    else if (selectedOption == 1)
+                    {
+
+                    }
+                    else
+                    {
+                        menuGoing = false;
+                        Console.WriteLine("Have a nice day!");
+                    }
+                }
+            }
+            else
+            {
+                while (menuGoing)
+                {
+                    int selectedOption = Menu.ShowMenu($"What do you want to do {character.Name}?\n", new[]
+                    {
+                        "Park Vehicle",
+                        "Unpark Vehicle",
+                        "Show parking history",
+                         "Exit"
+                    });
+                    if (selectedOption == 0)
+                    {
+                        Parkingspot.Park(starship, character);
+                    }
+                    else if (selectedOption == 0)
+                    {
+                        Parkingspot.Unpark(starship, character);
+                    }
+                    else if (selectedOption == 1)
+                    {
+
+                    }
+                    else
+                    {
+                        menuGoing = false;
+                        Console.WriteLine("Have a nice day!");
+                    }
+                }
+            }
+            
+        }
+    
+
+
+        public static async Task<Character> CharacterSelection()
+        {
+            bool characterSelection = true;
+            PeopleReponse peopleResponse = new();
+            int selection = -1;
+            while (characterSelection)
+            {
+                Console.WriteLine("Hello Traveler, Welcome to SpacePark!\n");
+                Console.Write("Enter your name: ");
+                string input = Console.ReadLine();
+                peopleResponse = await SpaceORM.ValidateCharacter(input);
+                if (peopleResponse.Results.Count != 0)
+                {
+                    string[] characters = peopleResponse.Results.Select(x => x.Name).ToArray();
+                    selection = Menu.ShowMenu("\nWho are you?", characters);
+                    Console.Clear();
+                    Console.WriteLine($"\nWelcome {peopleResponse.Results[selection].Name}");
+                    characterSelection = false;
+                }
+                else
+                {
+                    int _continue = Menu.ShowMenu("Do you wish to try again?", new[] { "Yes", "No" });
+                    if (_continue == 1)
+                    {
+                        Environment.Exit(0);
+                    }
+                }
+            }
+            return peopleResponse.Results[selection];
+        }
+        public static async Task<Starship> GetStarShips(Character character)
+        {
+            List<Starship> ships = await SpaceORM.ValidateStarship(character.StarShips);
+            int selection = -1;
+            if (ships.Count != 0)
+            {
+                string[] shipOptions = ships.Select(s => s.Name).ToArray();
+                selection = Menu.ShowMenu("\nChoose your ship", shipOptions);
+                Console.WriteLine("\nYou selected" + " " + ships[selection].Name);
+            }
+            else
+            {
+                Console.WriteLine("\nYou have no ships");
+                Environment.Exit(0);
+            }
+            Console.Clear();
+            return ships[selection];
+        }
         public static int ShowMenu(string prompt, string[] options)
         {
             if (options == null || options.Length == 0)
