@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SpaceEngine.Utils;
 
 namespace SpaceEngine
 {
@@ -24,9 +25,9 @@ namespace SpaceEngine
             var context = new MyContext();
             Parkingspot alreadyParked;
             alreadyParked = context.Parkingspots.Where(p => p.CharacterName == character.Name && p.SpaceshipName == starship.Name).FirstOrDefault();
+
             if (alreadyParked == null)
             {
-
                 var parking = context.Parkingspots
                     .Where(p => p.MinSize < double.Parse(starship.Length)
                     && p.MaxSize > double.Parse(starship.Length)
@@ -37,6 +38,9 @@ namespace SpaceEngine
                     parking.CharacterName = character.Name;
                     parking.Arrival = DateTime.Now;
                     context.SaveChanges();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"\nYour {starship.Name} has been parked at parkingspot number: {parking.ID}");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 else
                 {
@@ -66,14 +70,11 @@ namespace SpaceEngine
             parked = context.Parkingspots.Where(p => p.CharacterName == character.Name && p.SpaceshipName == starship.Name).FirstOrDefault();
             if (parked != null)
             {
-                DateTime Departure;
-                Departure = DateTime.Now;
+                DateTime Departure = DateTime.Now;
                 double diff2 = (Departure - parked.Arrival).TotalMinutes;
                 double price = Math.Round(diff2, 0, MidpointRounding.AwayFromZero) * 200;
                 Console.Clear();
-                Console.WriteLine($"\nTotal cost for the parking: {price}\n");
-
-                Receipt receipt = new Receipt
+                Receipt receipt = new ()
                 {
                     StarshipName = starship.Name,
                     Name = character.Name,
@@ -87,7 +88,8 @@ namespace SpaceEngine
                 parked.SpaceshipName = null;
                 parked.Arrival = default;
                 context.SaveChanges();
-                Console.WriteLine("You have successfully unparked your vehicle " + starship.Name);
+                Console.WriteLine($"You have successfully unparked your vehicle {starship.Name}\n");
+                Print.PrintReceipt(receipt);
             }
             else
             {
@@ -104,28 +106,12 @@ namespace SpaceEngine
         {
             using var context = new MyContext();
             var characterReceipts = context.Receipts.Where(p => p.Name == character.Name).Include("Parkingspot").ToList();
-            //var allReceipts = context.Receipts.Include("Parkingspot").ToList();
-            Console.WriteLine("SpacePark parking history");
+            Console.WriteLine($"\n{character.Name}'s parking history");
             Console.WriteLine();
             for (int i = 0; i < characterReceipts.Count; i++)
             {
-                if (i % 2 == 0)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                }
-                Console.WriteLine($"ID: {characterReceipts[i].ID}\n " +
-                    $"Character: {characterReceipts[i].Name}\n " +
-                    $"Starship: {characterReceipts[i].StarshipName}\n " +
-                    $"Parking size: {characterReceipts[i].Parkingspot.MaxSize}meters\n " +
-                    $"Arrival: {characterReceipts[i].Arrival}\n " +
-                    $"Departure: {characterReceipts[i].Departure}\n " +
-                    $"Total Price:{characterReceipts[i].TotalAmount}\n");
+                Print.PrintReceipt(characterReceipts[i], i);
             }
-                Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

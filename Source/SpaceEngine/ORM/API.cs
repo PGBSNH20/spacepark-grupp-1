@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SpaceEngine
 {
-    public class SpaceORM
+    public class API
     {
         // Using the API search function to get the Character       
         public static async Task<PeopleReponse> ValidateCharacter(string input)

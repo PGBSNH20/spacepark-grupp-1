@@ -9,12 +9,12 @@ namespace SpaceEngine
 {
     public class Menu
     {
-
         public static void Start(Character character, Starship starship)
         {
             bool menuGoing = true;
             while (menuGoing)
             {
+                Console.Clear();
                 menuGoing = ParkMenu(character, starship);
             }
         }
@@ -29,7 +29,7 @@ namespace SpaceEngine
                 Console.WriteLine("Hello Traveler, Welcome to SpacePark!\n");
                 Console.Write("Enter your name: ");
                 string input = Console.ReadLine();
-                peopleResponse = await SpaceORM.ValidateCharacter(input);
+                peopleResponse = await API.ValidateCharacter(input);
                 if (peopleResponse.Results.Count != 0)
                 {
                     string[] characters = peopleResponse.Results.Select(x => x.Name).ToArray();
@@ -51,7 +51,7 @@ namespace SpaceEngine
         }
         public static async Task<Starship> GetStarShips(Character character)
         {
-            List<Starship> ships = await SpaceORM.ValidateStarship(character.StarShips);
+            List<Starship> ships = await API.ValidateStarship(character.StarShips);
             int selection = -1;
             if (ships.Count != 0)
             {
@@ -130,14 +130,13 @@ namespace SpaceEngine
         }
         public static bool ParkMenu(Character character, Starship starship)
         {
-            var context = new MyContext();
-            var parkingsAvailable = context.Parkingspots.Where(p => p.SpaceshipName == starship.Name);
-            if (parkingsAvailable.Any())
+            using var context = new MyContext();
+            var shipFound = context.Parkingspots.Where(p => p.SpaceshipName == starship.Name && p.CharacterName == character.Name);
+            if (shipFound.Any())
             {
                 bool menuGoing = true;
-                int selectedOption = Menu.ShowMenu($"What do you want to do {character.Name}?\n", new[]
+                int selectedOption = Menu.ShowMenu($"What do you want to do with your {starship.Name}, {character.Name}?\n", new[]
                 {
-
                     "Unpark Vehicle",
                     "Show parking history",
                     "Choose Another character",
@@ -151,23 +150,21 @@ namespace SpaceEngine
                 }
                 else if (selectedOption == 1)
                 {
-                    //History method
                     Parkingspot.ShowHistory(starship, character);
                     menuGoing = Continue(character);
-
                 }
                 else if (selectedOption == 2)
                 {
                     Console.Clear();
-                    Character characterr = new Character();
-                    Starship starshipp = new Starship();
-                    characterr = Menu.CharacterSelection().Result;
-                    starshipp = Menu.GetStarShips(characterr).Result;
+                    Character newCharacter = Menu.CharacterSelection().Result;
+                    Starship newShip = Menu.GetStarShips(newCharacter).Result;
+                    menuGoing = false;
+                    Menu.Start(newCharacter, newShip);
                 }
                 else
                 {
 
-                    Console.WriteLine("Have a nice day!");
+                    Console.WriteLine("\nHave a nice day!");
                     menuGoing = false;
                 }
                 return menuGoing;
@@ -175,7 +172,7 @@ namespace SpaceEngine
             else
             {
                 bool menuGoing = true;
-                int selectedOption = Menu.ShowMenu($"What do you want to do {character.Name}?\n", new[]
+                int selectedOption = Menu.ShowMenu($"What do you want to do with your {starship.Name}, {character.Name}?\n", new[]
                 {
                     "Park Vehicle",
                     "Unpark Vehicle",
@@ -201,37 +198,31 @@ namespace SpaceEngine
                 else if (selectedOption == 3)
                 {
                     Console.Clear();
-                    Character characterr = new Character();
-                    Starship starshipp = new Starship();
-                    characterr = Menu.CharacterSelection().Result;
-                    starshipp = Menu.GetStarShips(characterr).Result;
+                    Character newCharacter = Menu.CharacterSelection().Result;
+                    Starship newShip = Menu.GetStarShips(newCharacter).Result;
+                    menuGoing = false;
+                    Menu.Start(newCharacter, newShip);
                 }
                 else
                 {
-
-                    Console.WriteLine("Have a nice day!");
+                    Console.WriteLine("\nHave a nice day!");
                     menuGoing = false;
                 }
                 return menuGoing;
             }
-
-
         }
 
         public static bool Continue(Character character)
         {
-
             bool menuGoing = true;
-            int selectedOption = Menu.ShowMenu($"Would you like to contune {character.Name}?\n", new[]
+            int selectedOption = Menu.ShowMenu($"\nWould you like to continue {character.Name}?\n", new[]
             {
                 "Yes",
                 "Exit"
-
             });
             if (selectedOption == 1)
             {
-
-                Console.WriteLine("Have a nice day!");
+                Console.WriteLine("\nHave a nice day!");
                 menuGoing = false;
             }
             return menuGoing;

@@ -16,8 +16,7 @@ namespace SpaceEngine
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;          
             Character character = await Menu.CharacterSelection();
             Starship starship = await Menu.GetStarShips(character);
-            Menu.Start(character, starship);
-                       
+            Menu.Start(character, starship);       
         }
     }
 }
