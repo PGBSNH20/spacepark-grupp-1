@@ -11,3 +11,6 @@ Continuation from yesterday, get the API and the databas to work, testing that y
 
 ## 2021-03-22
 Today we looked at our API's and our ideas on the database tables, and we decided to look at eachother's repositories and also look into how to get the data from the API and store it in our database, our plan is that tomorrow we will merge something to main.
+
+## 2021-03-23
+Decided on one set of people's branches and merged that to Main, the owners of that branch wrote some Todo to start helping the others go in and start helping out with that brach, so everyone is working in 1 start off.
