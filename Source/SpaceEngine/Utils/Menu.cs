@@ -35,14 +35,14 @@ namespace SpaceEngine
                      }
                     else if (selectedOption == 1)
                     {
-
+                        Parkingspot.ShowHistory(starship, character);
                     }
                     else
                     {
                         menuGoing = false;
                         Console.WriteLine("Have a nice day!");
                     }
-                }
+                } 
             }
             else
             {
@@ -65,7 +65,7 @@ namespace SpaceEngine
                     }
                     else if (selectedOption == 1)
                     {
-
+                        Parkingspot.ShowHistory(starship, character);
                     }
                     else
                     {

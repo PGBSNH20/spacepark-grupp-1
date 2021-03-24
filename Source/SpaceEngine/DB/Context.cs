@@ -29,9 +29,10 @@ namespace SpaceEngine
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //Data Source=DESKTOP-AI55B02\SQLEXPRESS;Initial Catalog="test database";Integrated Security=True
-            //PATRIC - "Server=DESKTOP-KID3QF2\SQLEXPRESS;Database=SpacePark;Trusted_Connection=Yes;
-            //JONAS -  "Server=DESKTOP-AI55B02\SQLEXPRESS;Database=SpacePark;Trusted_Connection=Yes;
-            optionsBuilder.UseSqlServer(@"Server = DESKTOP-7NBHFKN; Database = CodeFirst; Trusted_Connection = True;");
+            //PATRIC - "Server=DESKTOP-KID3QF2\SQLEXPRESS;Database=SpacePark;Trusted_Connection=Yes;"
+            //JONAS  - "Server=DESKTOP-AI55B02\SQLEXPRESS;Database=SpacePark;Trusted_Connection=Yes;"
+            //ANAS   - "Server = DESKTOP-7NBHFKN; Database = CodeFirst; Trusted_Connection = True;"
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-KID3QF2\SQLEXPRESS;Database=SpacePark;Trusted_Connection=Yes;");
         }
     }
 }
