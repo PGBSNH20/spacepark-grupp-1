@@ -87,7 +87,16 @@ namespace SpaceEngine
                 parked.SpaceshipName = null;
                 parked.Arrival = default;
                 context.SaveChanges();
-                Console.WriteLine("You have successfully unparked your vehicle");
+                Console.WriteLine("You have successfully unparked your vehicle " + starship.Name);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(starship.Name + " is not parked in our SpacePark!");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine();
             }
         }
 
