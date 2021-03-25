@@ -14,3 +14,8 @@ Today we looked at our API's and our ideas on the database tables, and we decide
 
 ## 2021-03-23
 Decided on one set of people's branches and merged that to Main, the owners of that branch wrote some Todo to start helping the others go in and start helping out with that brach, so everyone is working in 1 start off.
+
+## 2021-03-25
+* Discuss our database model, introduce more tables or go with those we have.
+* Changed SpaceEngine from Console Application to Class Library.
+* Code Cleanup, following the DRY principle.
