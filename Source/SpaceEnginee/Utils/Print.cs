@@ -7,7 +7,7 @@ namespace SpaceEngine.Utils
     {
         public static void TakenSpots()
         {
-            var context = new MyContext();
+            using var context = new MyContext();
             var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null);
             Console.WriteLine();
             if (parkingsTaken.Count() == 5)
