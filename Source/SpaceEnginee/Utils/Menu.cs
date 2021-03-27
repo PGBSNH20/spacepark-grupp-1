@@ -80,6 +80,7 @@ namespace SpaceEngine
             Console.CursorVisible = true;
             return selected;
         }
+
         public static bool ParkMenu(Character character, Starship starship)
         {
             {
@@ -87,14 +88,16 @@ namespace SpaceEngine
                 using var context = new SpaceParkContext();
                 var shipFound = context.Parkingspots.Where(p => p.SpaceshipName == starship.Name && p.CharacterName == character.Name);
                 int selectedOption;
+
                 string[] options = new[]
                 {
-                "Park Vehicle",
-                "Unpark Vehicle",
-                "Show parking history",
-                "Choose Another character",
-                "Exit"
-            };
+                    "Park Vehicle",
+                    "Unpark Vehicle",
+                    "Show parking history",
+                    "Choose Another character",
+                    "Exit"
+                };
+
                 if (shipFound.Any())
                 {
                     selectedOption = 1 + Menu.ShowMenu($"What do you want to do with your {starship.Name}, {character.Name}?\n", options.Skip(1).ToArray());
@@ -146,6 +149,5 @@ namespace SpaceEngine
             }
             return menuGoing;
         }
-
     }
 }

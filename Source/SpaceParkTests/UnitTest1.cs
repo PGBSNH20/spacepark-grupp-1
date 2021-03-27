@@ -28,6 +28,7 @@ namespace SpaceParkTests
             bool isTraveler = character.Result.Results.Count == 1;
             Assert.False(isTraveler);
         }
+
         [Theory]
         [InlineData("https://swapi.dev/api/starships/12/", "https://swapi.dev/api/starships/16/")]
         public void ValidateStarship_CorrectInpute_ExpectTrue(string input, string input2)

@@ -18,6 +18,7 @@ namespace SpaceEngine
             var peopleResponse = await client.GetAsync<CharacterResponse>(request);
             return peopleResponse;
         }
+
         public static async Task<List<Starship>> ValidateStarship(List<string> starshipUrls)
         {
             List<Starship> ships = new();
@@ -30,6 +31,7 @@ namespace SpaceEngine
             }
             return ships;
         }
+
         public static async Task<Character> CharacterSelection()
         {
             bool characterSelection = true;
@@ -60,6 +62,7 @@ namespace SpaceEngine
             }
             return charactersReturned.Results[selection];
         }
+
         public static async Task<Starship> GetStarShips(Character character)
         {
             List<Starship> ships = await API.ValidateStarship(character.StarShips);
