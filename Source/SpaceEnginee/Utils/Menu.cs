@@ -86,7 +86,7 @@ namespace SpaceEngine
             {
                 bool menuGoing = true;
                 using var context = new SpaceParkContext();
-                // Kolla om användaren redan har parkerat.
+                // Kolla om användaren redan har parkerat valt skeppet.
                 var shipFound = context.Parkingspots.Where(p => p.SpaceshipName == starship.Name && p.CharacterName == character.Name);
                 int selectedOption;
 

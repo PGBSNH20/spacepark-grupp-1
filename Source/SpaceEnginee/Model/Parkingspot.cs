@@ -22,17 +22,17 @@ namespace SpaceEngine
 
         public static void Park(Starship starship, Character character)
         {
-            var context = new SpaceParkContext();
+            using var context = new SpaceParkContext();
+            // Kontrollera hur många platser som är tagna.
+            var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null).Count();
+            // Räknar ut totala mängden parkeringsplatser.
+            var totalParkings = context.Parkingspots.Count();
 
             // Kontrollera om det finns en ledig parkering som rymmer skeppets storlek.
             var parking = context.Parkingspots
                 .Where(p => p.MinSize <= double.Parse(starship.Length)
                 && p.MaxSize >= double.Parse(starship.Length)
                 && p.SpaceshipName == null).FirstOrDefault();
-            // Kontrollera hur många platser som är tagna.
-            var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null).Count();
-            // Räknar ut totala mängden parkeringsplatser.
-            var totalParkings = context.Parkingspots.Count();
 
             // Om vi hittat en parkering som matchar kriterierna så anger vi nya värden för den parkeringsplatsen och sparar till databasen.
             if (parking != null)
@@ -55,26 +55,24 @@ namespace SpaceEngine
             else
             {
                 Console.Clear();
-                Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("No parkings available");
+                Console.WriteLine("\nNo parkings available\n");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine();
             }
         }
 
         public static void Unpark(Starship starship, Character character)
         {
-            var context = new SpaceParkContext();
+            using var context = new SpaceParkContext();
             // Hämtar in den parkeringen användaren har parkerat sitt skepp på.
             Parkingspot parked = context.Parkingspots.Where(p => p.CharacterName == character.Name && p.SpaceshipName == starship.Name).FirstOrDefault();
             //Om vi hittat en parking som matchat kriterierna för användaren så.
             if (parked != null)
             {
-                // Beräkna pris baserat på ankomst och avgångs tider.
+                // Beräkna pris baserat på ankomst och avgångtider i minuter.
                 DateTime Departure = DateTime.Now;
-                double diff2 = (Departure - parked.Arrival).TotalMinutes;
-                double price = Math.Round(diff2, 0, MidpointRounding.AwayFromZero) * 200;
+                double diff = (Departure - parked.Arrival).TotalMinutes;
+                double price = (Math.Round(diff, 0, MidpointRounding.AwayFromZero) * 200) + 100;
                 Console.Clear();
                 // Skapa nytt kvitto
                 Receipt receipt = new ()
