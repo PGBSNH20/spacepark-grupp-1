@@ -26,7 +26,8 @@ namespace SpaceEngine.Utils
                 Console.ForegroundColor = ConsoleColor.Green;
             }
             Console.WriteLine($"Parkingsspots occupied [{parkingsTaken}/{totalParkings}]\n");
-            Console.ForegroundColor = ConsoleColor.White;
+            //Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
         }
 
         public static void PrintReceipt(Receipt receipt, int i = 0)
@@ -46,7 +47,8 @@ namespace SpaceEngine.Utils
             $"Arrival: {receipt.Arrival}\n " +
             $"Departure: {receipt.Departure}\n " +
             $"Total Price:{receipt.TotalAmount}\n");
-            Console.ForegroundColor = ConsoleColor.White;
+            //Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
         }
     }
 }
