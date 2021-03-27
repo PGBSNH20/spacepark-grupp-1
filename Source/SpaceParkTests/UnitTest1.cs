@@ -40,22 +40,5 @@ namespace SpaceParkTests
             bool isShip = ship.Result.Count == 2;
             Assert.True(isShip);
         }
-
-
-        //TODO: Fix this!
-        //[Theory]
-        //[InlineData("https://facebook.com", "https://twitter.com/")]
-        //public void ValidateStarship_IncorrectInpute_ExpectFalse(string input, string input2)
-        //{
-        //    List<string> ships = new();
-        //    ships.Add(input);
-        //    ships.Add(input2);
-
-        //    var ship = SpaceOrm.ValidateStarship(ships);
-        //    bool isShip = ship.Result.Count == 2;
-        //    Assert.False(isShip);
-        //}
-
-
     }
 }
