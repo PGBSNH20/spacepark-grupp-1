@@ -23,55 +23,41 @@ namespace SpaceEngine
         public static void Park(Starship starship, Character character)
         {
             var context = new SpaceParkContext();
-            // Kontrollera om användaren redan parkerat inmatat skepp.
-            Parkingspot alreadyParked = context.Parkingspots.Where(p => p.CharacterName == character.Name && p.SpaceshipName == starship.Name).FirstOrDefault();
 
-            if (alreadyParked == null)
+            // Kontrollera om det finns en ledig parkering som rymmer skeppets storlek.
+            var parking = context.Parkingspots
+                .Where(p => p.MinSize <= double.Parse(starship.Length)
+                && p.MaxSize >= double.Parse(starship.Length)
+                && p.SpaceshipName == null).FirstOrDefault();
+            // Kontrollera hur många platser som är tagna.
+            var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null).Count();
+            // Räknar ut totala mängden parkeringsplatser.
+            var totalParkings = context.Parkingspots.Count();
+
+            // Om vi hittat en parkering som matchar kriterierna så anger vi nya värden för den parkeringsplatsen och sparar till databasen.
+            if (parking != null)
             {
-                // Kontrollera om det finns en ledig parkering som rymmer skeppets storlek.
-                var parking = context.Parkingspots
-                    .Where(p => p.MinSize <= double.Parse(starship.Length)
-                    && p.MaxSize >= double.Parse(starship.Length)
-                    && p.SpaceshipName == null).FirstOrDefault();
-                // Kontrollera hur många platser som är tagna.
-                var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null).Count();
-                // Räknar ut totala mängden parkeringsplatser.
-                var totalParkings = context.Parkingspots.Count();
-
-                // Om vi hittat en parkering som matchar kriterierna så anger vi nya värden för den parkeringsplatsen och sparar till databasen.
-                if (parking != null)
-                {
-                    parking.SpaceshipName = starship.Name;
-                    parking.CharacterName = character.Name;
-                    parking.Arrival = DateTime.Now;
-                    context.SaveChanges();
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\nYour {starship.Name} has been parked at parkingspot number: {parking.ID}");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                // Om det finns lediga platser men ingen som matchar användarens skeppstorlek.
-                else if (parkingsTaken < totalParkings)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nNo parkings available for that size");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("No parkings available");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine();
-                }
+                parking.SpaceshipName = starship.Name;
+                parking.CharacterName = character.Name;
+                parking.Arrival = DateTime.Now;
+                context.SaveChanges();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"\nYour {starship.Name} has been parked at parkingspot number: {parking.ID}");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            // Om det finns lediga platser men ingen som matchar användarens skeppstorlek.
+            else if (parkingsTaken < totalParkings)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nNo parkings available for that size");
+                Console.ForegroundColor = ConsoleColor.White;
             }
             else
             {
                 Console.Clear();
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("You have already parked that Starship");
+                Console.WriteLine("No parkings available");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine();
             }

@@ -26,7 +26,6 @@ namespace SpaceEngine.Utils
                 Console.ForegroundColor = ConsoleColor.Green;
             }
             Console.WriteLine($"Parkingsspots occupied [{parkingsTaken}/{totalParkings}]\n");
-            //Console.ForegroundColor = ConsoleColor.White;
             Console.ResetColor();
         }
 
@@ -43,11 +42,11 @@ namespace SpaceEngine.Utils
             Console.WriteLine($"Receipt ID: {receipt.ID}\n " +
             $"Character: {receipt.Name}\n " +
             $"Starship: {receipt.StarshipName}\n " +
+            $"Parkingspot: {receipt.Parkingspot.ID}\n " +
             $"Parking size: {receipt.Parkingspot.MaxSize}meters\n " +
             $"Arrival: {receipt.Arrival}\n " +
             $"Departure: {receipt.Departure}\n " +
             $"Total Price:{receipt.TotalAmount}\n");
-            //Console.ForegroundColor = ConsoleColor.White;
             Console.ResetColor();
         }
     }
