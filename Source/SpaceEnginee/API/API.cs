@@ -67,7 +67,7 @@ namespace SpaceEngine
         {
             List<Starship> ships = await API.ValidateStarship(character.StarShips);
             int selection = -1;
-            if (ships.Count != 0)
+            if (ships.Count > 0)
             {
                 string[] shipOptions = ships.Select(s => s.Name).ToArray();
                 selection = Menu.ShowMenu("\nChoose your ship", shipOptions);

@@ -115,7 +115,7 @@ namespace SpaceEngine
                         Parkingspot.Unpark(starship, character);
                         break;
                     case 2:
-                        Parkingspot.ShowHistory(starship, character);
+                        Parkingspot.ShowHistory(character);
                         break;
                     case 3:
                         Console.Clear();
