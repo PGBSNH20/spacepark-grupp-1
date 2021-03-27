@@ -32,6 +32,9 @@ namespace SpaceEngine
                     .Where(p => p.MinSize <= double.Parse(starship.Length)
                     && p.MaxSize >= double.Parse(starship.Length)
                     && p.SpaceshipName == null).FirstOrDefault();
+                var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null).Count();
+                var totalParkings = context.Parkingspots.Count();
+
                 if (parking != null)
                 {
                     parking.SpaceshipName = starship.Name;
@@ -40,6 +43,12 @@ namespace SpaceEngine
                     context.SaveChanges();
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"\nYour {starship.Name} has been parked at parkingspot number: {parking.ID}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else if (parkingsTaken < totalParkings)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nNo parkings available for that size");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 else
