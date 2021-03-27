@@ -22,7 +22,7 @@ namespace SpaceEngine
 
         public static void Park(Starship starship, Character character)
         {
-            var context = new MyContext();
+            var context = new SpaceParkContext();
             Parkingspot alreadyParked;
             alreadyParked = context.Parkingspots.Where(p => p.CharacterName == character.Name && p.SpaceshipName == starship.Name).FirstOrDefault();
 
@@ -65,7 +65,7 @@ namespace SpaceEngine
 
         public static void Unpark(Starship starship, Character character)
         {
-            var context = new MyContext();
+            var context = new SpaceParkContext();
             Parkingspot parked;
             parked = context.Parkingspots.Where(p => p.CharacterName == character.Name && p.SpaceshipName == starship.Name).FirstOrDefault();
             if (parked != null)
@@ -104,7 +104,7 @@ namespace SpaceEngine
 
         public static void ShowHistory(Starship starship, Character character)
         {
-            using var context = new MyContext();
+            using var context = new SpaceParkContext();
             var characterReceipts = context.Receipts.Where(p => p.Name == character.Name).Include("Parkingspot").ToList();
             Console.WriteLine($"\n{character.Name}'s parking history");
             Console.WriteLine();

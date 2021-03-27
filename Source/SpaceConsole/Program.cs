@@ -12,9 +12,11 @@ namespace SpaceConsole
         {
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             Print.TakenSpots();
-            Character character = await Menu.CharacterSelection();
-            Starship starship = await Menu.GetStarShips(character);
+            Character character = await API.CharacterSelection();
+            Starship starship = await API.GetStarShips(character);
             Menu.Start(character, starship);
         }
+        //TODO: More Parkings
+        //TODO: More Unit tests
     }
 }

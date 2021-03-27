@@ -8,11 +8,8 @@ using SpaceEngine.Model;
 
 namespace SpaceEngine
 {
-    public class MyContext : DbContext
+    public class SpaceParkContext : DbContext
     {
-        //public DbSet<Character> Character { get; set; }
-        //public DbSet<Starship> StarShip { get; set; }
-
         public DbSet<Parkingspot> Parkingspots { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
 

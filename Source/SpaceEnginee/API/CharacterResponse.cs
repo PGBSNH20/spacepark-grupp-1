@@ -2,7 +2,7 @@
 
 namespace SpaceEngine
 {
-    public class PeopleReponse
+    public class CharacterResponse
     {
         public List<Character> Results { get; set; }
     }

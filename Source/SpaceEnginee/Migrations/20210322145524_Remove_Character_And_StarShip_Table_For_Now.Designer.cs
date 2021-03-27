@@ -8,7 +8,7 @@ using SpaceEngine;
 
 namespace SpaceEngine.Migrations
 {
-    [DbContext(typeof(MyContext))]
+    [DbContext(typeof(SpaceParkContext))]
     [Migration("20210322145524_Remove_Character_And_StarShip_Table_For_Now")]
     partial class Remove_Character_And_StarShip_Table_For_Now
     {

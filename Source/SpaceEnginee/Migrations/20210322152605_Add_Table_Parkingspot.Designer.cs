@@ -8,7 +8,7 @@ using SpaceEngine;
 
 namespace SpaceEngine.Migrations
 {
-    [DbContext(typeof(MyContext))]
+    [DbContext(typeof(SpaceParkContext))]
     [Migration("20210322152605_Add_Table_Parkingspot")]
     partial class Add_Table_Parkingspot
     {

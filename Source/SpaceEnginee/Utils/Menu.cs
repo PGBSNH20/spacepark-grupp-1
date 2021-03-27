@@ -19,54 +19,6 @@ namespace SpaceEngine
             }
         }
 
-        public static async Task<Character> CharacterSelection()
-        {
-            bool characterSelection = true;
-            PeopleReponse peopleResponse = new();
-            int selection = -1;
-            while (characterSelection)
-            {
-                Console.WriteLine("Hello Traveler, Welcome to SpacePark!\n");
-                Console.Write("Enter your name: ");
-                string input = Console.ReadLine();
-                peopleResponse = await API.ValidateCharacter(input);
-                if (peopleResponse.Results.Count != 0)
-                {
-                    string[] characters = peopleResponse.Results.Select(x => x.Name).ToArray();
-                    selection = Menu.ShowMenu("\nWho are you?", characters);
-                    Console.Clear();
-                    Console.WriteLine($"\nWelcome {peopleResponse.Results[selection].Name}");
-                    characterSelection = false;
-                }
-                else
-                {
-                    int _continue = Menu.ShowMenu("Do you wish to try again?", new[] { "Yes", "No" });
-                    if (_continue == 1)
-                    {
-                        Environment.Exit(0);
-                    }
-                }
-            }
-            return peopleResponse.Results[selection];
-        }
-        public static async Task<Starship> GetStarShips(Character character)
-        {
-            List<Starship> ships = await API.ValidateStarship(character.StarShips);
-            int selection = -1;
-            if (ships.Count != 0)
-            {
-                string[] shipOptions = ships.Select(s => s.Name).ToArray();
-                selection = Menu.ShowMenu("\nChoose your ship", shipOptions);
-                Console.WriteLine("\nYou selected" + " " + ships[selection].Name);
-            }
-            else
-            {
-                Console.WriteLine("\nYou have no ships");
-                Environment.Exit(0);
-            }
-            Console.Clear();
-            return ships[selection];
-        }
         public static int ShowMenu(string prompt, string[] options)
         {
             if (options == null || options.Length == 0)
@@ -132,7 +84,7 @@ namespace SpaceEngine
         {
             {
                 bool menuGoing = true;
-                using var context = new MyContext();
+                using var context = new SpaceParkContext();
                 var shipFound = context.Parkingspots.Where(p => p.SpaceshipName == starship.Name && p.CharacterName == character.Name);
                 int selectedOption;
                 string[] options = new[]
@@ -164,8 +116,8 @@ namespace SpaceEngine
                         break;
                     case 3:
                         Console.Clear();
-                        Character newCharacter = Menu.CharacterSelection().Result;
-                        Starship newShip = Menu.GetStarShips(newCharacter).Result;
+                        Character newCharacter = API.CharacterSelection().Result;
+                        Starship newShip = API.GetStarShips(newCharacter).Result;
                         menuGoing = false;
                         Menu.Start(newCharacter, newShip);
                         break;

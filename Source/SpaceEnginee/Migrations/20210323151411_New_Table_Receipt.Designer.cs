@@ -9,7 +9,7 @@ using SpaceEngine;
 
 namespace SpaceEngine.Migrations
 {
-    [DbContext(typeof(MyContext))]
+    [DbContext(typeof(SpaceParkContext))]
     [Migration("20210323151411_New_Table_Receipt")]
     partial class New_Table_Receipt
     {
