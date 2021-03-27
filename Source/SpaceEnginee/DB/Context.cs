@@ -21,6 +21,16 @@ namespace SpaceEngine
                     new Parkingspot() { ID = i, MinSize = 0, MaxSize = 500}
                     );
             }
+            for (int i = 6; i < 9; i++)
+            {
+                modelBuilder.Entity<Parkingspot>()
+                    .HasData(new Parkingspot() { ID = i, MinSize = 500, MaxSize = 5000 });
+            }
+            for (int i = 9; i < 10; i++)
+            {
+                modelBuilder.Entity<Parkingspot>()
+                    .HasData(new Parkingspot() { ID = i, MinSize = 5000, MaxSize = 120000 });
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

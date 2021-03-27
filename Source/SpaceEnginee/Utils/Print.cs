@@ -8,14 +8,15 @@ namespace SpaceEngine.Utils
         public static void TakenSpots()
         {
             using var context = new SpaceParkContext();
-            var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null);
+            var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null).Count();
+            var totalParkings = context.Parkingspots.Count();
 
             Console.WriteLine();
-            if (parkingsTaken.Count() == 5)
+            if (parkingsTaken == totalParkings)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
             }
-            else if (parkingsTaken.Count() <= 2 || parkingsTaken.Count() <= 4)
+            else if (parkingsTaken > (totalParkings / 2))
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
@@ -23,7 +24,7 @@ namespace SpaceEngine.Utils
             {
                 Console.ForegroundColor = ConsoleColor.Green;
             }
-            Console.WriteLine($"Parkingsspots occupied [{parkingsTaken.Count()}/5]\n");
+            Console.WriteLine($"Parkingsspots occupied [{parkingsTaken}/{totalParkings}]\n");
             Console.ForegroundColor = ConsoleColor.White;
         }
 

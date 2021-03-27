@@ -29,8 +29,8 @@ namespace SpaceEngine
             if (alreadyParked == null)
             {
                 var parking = context.Parkingspots
-                    .Where(p => p.MinSize < double.Parse(starship.Length)
-                    && p.MaxSize > double.Parse(starship.Length)
+                    .Where(p => p.MinSize <= double.Parse(starship.Length)
+                    && p.MaxSize >= double.Parse(starship.Length)
                     && p.SpaceshipName == null).FirstOrDefault();
                 if (parking != null)
                 {
