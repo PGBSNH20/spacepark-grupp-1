@@ -145,7 +145,7 @@ namespace SpaceEngine
             if (selectedOption == 1)
             {
                 Console.WriteLine("\nHave a nice day!");
-                menuGoing = false;
+                Environment.Exit(0);
             }
             return menuGoing;
         }
