@@ -86,7 +86,7 @@ namespace SpaceEngine
             {
                 bool menuGoing = true;
                 using var context = new SpaceParkContext();
-                // Kolla om användaren redan har parkerat valt skeppet.
+                // Check if user's ship is already parked.
                 var shipFound = context.Parkingspots.Where(p => p.SpaceshipName == starship.Name && p.CharacterName == character.Name);
                 int selectedOption;
 
@@ -98,7 +98,7 @@ namespace SpaceEngine
                     "Choose Another character",
                     "Exit"
                 };
-                // Om användaren har parkerat, ta bort menyvalet för att parkera.
+                // If user is already parked, remove park option.
                 if (shipFound.Any())
                 {
                     selectedOption = 1 + Menu.ShowMenu($"What do you want to do with your {starship.Name}, {character.Name}?\n", options.Skip(1).ToArray());

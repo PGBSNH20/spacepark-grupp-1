@@ -8,7 +8,7 @@ namespace SpaceEngine.Utils
         public static void TakenSpots()
         {
             using var context = new SpaceParkContext();
-            // Beräkna alla lediga platser
+            // Calculates parkingspots taken and counts total parkingspots
             var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null).Count();
             var totalParkings = context.Parkingspots.Count();
 

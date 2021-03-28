@@ -23,18 +23,17 @@ namespace SpaceEngine
         public static void Park(Starship starship, Character character)
         {
             using var context = new SpaceParkContext();
-            // Kontrollera hur många platser som är tagna.
-            var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null).Count();
-            // Räknar ut totala mängden parkeringsplatser.
+            // Calculates parkingspots taken and counts total parkingspots
             var totalParkings = context.Parkingspots.Count();
+            var parkingsTaken = context.Parkingspots.Where(p => p.SpaceshipName != null).Count();
 
-            // Kontrollera om det finns en ledig parkering som rymmer skeppets storlek.
+            // Check if any parkingspot can contain selected starships size and is available.
             var parking = context.Parkingspots
                 .Where(p => p.MinSize <= double.Parse(starship.Length)
                 && p.MaxSize >= double.Parse(starship.Length)
                 && p.SpaceshipName == null).FirstOrDefault();
 
-            // Om vi hittat en parkering som matchar kriterierna så anger vi nya värden för den parkeringsplatsen och sparar till databasen.
+            // If a parkingspot was found, change the parkingspots values and save to database.
             if (parking != null)
             {
                 parking.SpaceshipName = starship.Name;
@@ -45,7 +44,7 @@ namespace SpaceEngine
                 Console.WriteLine($"\nYour {starship.Name} has been parked at parkingspot number: {parking.ID}");
                 Console.ForegroundColor = ConsoleColor.White;
             }
-            // Om det finns lediga platser men ingen som matchar användarens skeppstorlek.
+            // If there are available parkingspots but none matching starshipsize, print message
             else if (parkingsTaken < totalParkings)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -64,19 +63,17 @@ namespace SpaceEngine
         public static void Unpark(Starship starship, Character character)
         {
             using var context = new SpaceParkContext();
-            // Hämtar in den parkeringen användaren har parkerat sitt skepp på.
+            // Retrieves the parkingspot where the user has parked, if none was found parked is null.
             Parkingspot parked = context.Parkingspots.Where(p => p.CharacterName == character.Name && p.SpaceshipName == starship.Name).FirstOrDefault();
-            Parkingspot small = context.Parkingspots.FirstOrDefault(p => p.MinSize == 0 && p.MaxSize == 500);
 
-            //Om vi hittat en parking som matchat kriterierna för användaren så.
+            // If a parkingspot where the user is parked was found.
             if (parked != null)
             {
-                // Beräkna pris baserat på ankomst och avgångtider i minuter.
                 DateTime Departure = DateTime.Now;
+                // Calculates how many minutes the user was parked
                 double diff = (Departure - parked.Arrival).TotalMinutes;
                 double price = 0;
-
-                // Calculate price based on parkingspot size.
+                // Then calculate the minute price of parkingize times the amount of minutes + the starting fee.
                 if (parked.MinSize == 0)
                 {
                     price = (Math.Round(diff, 0, MidpointRounding.AwayFromZero) * 200) + 100;
@@ -91,7 +88,7 @@ namespace SpaceEngine
                 }
 
                 Console.Clear();
-                // Skapa nytt kvitto
+                // Create a new receipt
                 Receipt receipt = new ()
                 {
                     StarshipName = starship.Name,
@@ -101,7 +98,7 @@ namespace SpaceEngine
                     Parkingspot = parked,
                     TotalAmount = price
                 };
-                // Lägg till kvitto till databasen, ändra värden på parkeringsplatsen och spara ändringar.
+                // Add receipt to database and change parkingspot values then save changes to database.
                 context.Receipts.Add(receipt);
                 parked.CharacterName = null;
                 parked.SpaceshipName = null;
@@ -122,7 +119,7 @@ namespace SpaceEngine
         public static void ShowHistory(Character character)
         {
             using var context = new SpaceParkContext();
-            // Hämta alla kvitton där användaren förekommer baserat på namn.
+            // Gets all the users receipts based on character name.
             var characterReceipts = context.Receipts.Where(p => p.Name == character.Name).Include("Parkingspot").ToList();
             Console.WriteLine($"\n{character.Name}'s parking history");
             Console.WriteLine();
