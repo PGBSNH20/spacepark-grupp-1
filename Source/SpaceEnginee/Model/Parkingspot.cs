@@ -66,13 +66,30 @@ namespace SpaceEngine
             using var context = new SpaceParkContext();
             // Hämtar in den parkeringen användaren har parkerat sitt skepp på.
             Parkingspot parked = context.Parkingspots.Where(p => p.CharacterName == character.Name && p.SpaceshipName == starship.Name).FirstOrDefault();
+            Parkingspot small = context.Parkingspots.FirstOrDefault(p => p.MinSize == 0 && p.MaxSize == 500);
+
             //Om vi hittat en parking som matchat kriterierna för användaren så.
             if (parked != null)
             {
                 // Beräkna pris baserat på ankomst och avgångtider i minuter.
                 DateTime Departure = DateTime.Now;
                 double diff = (Departure - parked.Arrival).TotalMinutes;
-                double price = (Math.Round(diff, 0, MidpointRounding.AwayFromZero) * 200) + 100;
+                double price = 0;
+
+                // Calculate price based on parkingspot size.
+                if (parked.MinSize == 0)
+                {
+                    price = (Math.Round(diff, 0, MidpointRounding.AwayFromZero) * 200) + 100;
+                }
+                else if(parked.MinSize == 500)
+                {
+                    price = (Math.Round(diff, 0, MidpointRounding.AwayFromZero) * 800) + 400;
+                }
+                else
+                {
+                    price = (Math.Round(diff, 0, MidpointRounding.AwayFromZero) * 12000) + 6000;
+                }
+
                 Console.Clear();
                 // Skapa nytt kvitto
                 Receipt receipt = new ()
@@ -96,11 +113,9 @@ namespace SpaceEngine
             else
             {
                 Console.Clear();
-                Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(starship.Name + " is not parked in our SpacePark!");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine();
+                Console.WriteLine($"\n{starship.Name} is not parked in our SpacePark!\n");
+                Console.ResetColor();
             }
         }
 
