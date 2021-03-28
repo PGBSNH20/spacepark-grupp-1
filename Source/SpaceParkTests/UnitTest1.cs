@@ -23,6 +23,8 @@ namespace SpaceParkTests
         [InlineData("Jonas Schmedtmann")]
         [InlineData("Spacejam george")]
         [InlineData("Darth Peter")]
+        [InlineData("")]
+        [InlineData(null)]
         public void ValidateCharacterName_IncorrectInput_ExpectFalse(string input)
         {
             var character = API.ValidateCharacter(input);
