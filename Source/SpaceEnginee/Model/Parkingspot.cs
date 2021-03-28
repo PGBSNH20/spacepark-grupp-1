@@ -76,15 +76,15 @@ namespace SpaceEngine
                 // Then calculate the minute price of parkingize times the amount of minutes + the starting fee.
                 if (parked.MinSize == 0)
                 {
-                    price = (Math.Round(diff, 0, MidpointRounding.AwayFromZero) * 200) + 100;
+                    price = (Math.Round(diff, 0) * 200) + 100;
                 }
                 else if(parked.MinSize == 500)
                 {
-                    price = (Math.Round(diff, 0, MidpointRounding.AwayFromZero) * 800) + 400;
+                    price = (Math.Round(diff, 0) * 800) + 400;
                 }
                 else
                 {
-                    price = (Math.Round(diff, 0, MidpointRounding.AwayFromZero) * 12000) + 6000;
+                    price = (Math.Round(diff, 0) * 12000) + 6000;
                 }
 
                 Console.Clear();
