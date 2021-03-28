@@ -8,13 +8,14 @@ namespace SpaceParkTests
     public class UnitTest1
     {
         [Theory]
-        [InlineData("Luke Skywalker")]
-        [InlineData("Leia Organa")]
-        [InlineData("Darth Vader")]
-        public void ValidateCharacterName_CorrectInput_ExpectTrue(string input)
+        [InlineData("Luke Skywalker", "Luke Skywalker")]
+        [InlineData("Leia Organa", "Leia Organa")]
+        [InlineData("Darth Vader", "Darth Vader")]
+        [InlineData("LuKE SkYWalKEr", "Luke Skywalker")]
+        public void ValidateCharacterName_CorrectInput_ExpectTrue(string input, string expected)
         {
             var character = API.ValidateCharacter(input);
-            bool correctCharacterName = character.Result.Results[0].Name == input;
+            bool correctCharacterName = character.Result.Results[0].Name == expected;
             Assert.True(correctCharacterName);
         }
 
